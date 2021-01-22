@@ -8,7 +8,6 @@ import Layout from '@/layout'
 
 /* Router Modules */
 
-
 export const constantRoutes = [
   {
     path: '/redirect',
@@ -63,8 +62,8 @@ export const constantRoutes = [
       {
         path: 'bossList',
         component: () => import('@/views/boss/List'),
-        name: 'BossList',
-        meta: { title: 'BossList', icon: 'dashboard', affix: true }
+        name: '老板信息列表',
+        meta: { title: '老板信息列表', icon: 'dashboard', affix: true }
       }
     ]
   }
