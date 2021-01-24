@@ -2,11 +2,11 @@
   <div class="app-container">
     <div class="filter-container">
       <el-sl-panel style="border-left: 60px" class="filter-item">bossID:</el-sl-panel>
-      <el-input v-model="listQuery.title" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.id" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-sl-panel style="border-left: 60px" class="filter-item">姓名:</el-sl-panel>
-      <el-input v-model="listQuery.title" placeholder="姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.name" placeholder="姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-sl-panel style="border-left: 60px" class="filter-item">手机号码:</el-sl-panel>
-      <el-input v-model="listQuery.title" placeholder="手机号码" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.phoneNumber" placeholder="手机号码" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
@@ -38,18 +38,17 @@
       </el-table-column>
       <el-table-column label="姓名" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.author }}</span>
+          <span>{{ row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="手机号" min-width="150px" align="center">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
-          <el-tag>{{ row.type | typeFilter }}</el-tag>
+          <span>{{ row.phoneNumber }}</span>
         </template>
       </el-table-column>
       <el-table-column label="上任时间" width="110px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.updateTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
@@ -107,8 +106,8 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
-import { selectByPage} from '@/api/boss'
+import { fetchPv, createArticle, updateArticle } from '@/api/article'
+import { selectByPage } from '@/api/boss'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -191,23 +190,11 @@ export default {
     this.getList()
   },
   methods: {
-    selectByPage() {
-      this.listLoading = true
-      selectByPage(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
-
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
-      })
-    },
     getList() {
       this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+      selectByPage(this.listQuery).then(response => {
+        this.list = response.content.data
+        this.total = response.content.totalCount
 
         // Just to simulate the time of the request
         setTimeout(() => {
@@ -218,7 +205,7 @@ export default {
     handleFilter() {
       this.listQuery.page = 1
       console.log(this.listQuery)
-      this.selectByPage()
+      this.getList()
     },
     handleModifyStatus(row, status) {
       this.$message({
