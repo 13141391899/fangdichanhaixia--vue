@@ -1,12 +1,30 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-sl-panel style="border-left: 60px" class="filter-item">bossID:</el-sl-panel>
-      <el-input v-model="listQuery.id" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-sl-panel style="border-left: 60px" class="filter-item">姓名:</el-sl-panel>
-      <el-input v-model="listQuery.name" placeholder="姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-sl-panel style="border-left: 60px" class="filter-item">手机号码:</el-sl-panel>
-      <el-input v-model="listQuery.phoneNumber" placeholder="手机号码" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">houseID:</el-sl-panel>
+      <el-input v-model="listQuery.id" placeholder="houseID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">bossID:</el-sl-panel>
+      <el-input v-model="listQuery.name" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">房源地址:</el-sl-panel>
+      <el-input v-model="listQuery.phoneNumber" placeholder="房源地址" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">房东名称:</el-sl-panel>
+      <el-input v-model="listQuery.id" placeholder="房东名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">房东电话号:</el-sl-panel>
+      <el-input v-model="listQuery.name" placeholder="房东电话号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">收款人名称:</el-sl-panel>
+      <el-input v-model="listQuery.phoneNumber" placeholder="收款人名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">收款人手机号:</el-sl-panel>
+      <el-input v-model="listQuery.id" placeholder="收款人手机号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">租住类型:</el-sl-panel>
+      <el-input v-model="listQuery.name" placeholder="租住类型" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">合同编号:</el-sl-panel>
+      <el-input v-model="listQuery.name" placeholder="合同编号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">付款类型:</el-sl-panel>
+      <el-input v-model="listQuery.name" placeholder="付款类型" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">收款账号:</el-sl-panel>
+      <el-input v-model="listQuery.name" placeholder="收款账号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">合同起止时间:</el-sl-panel>
+      <el-input v-model="listQuery.phoneNumber" placeholder="合同起止时间" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
@@ -32,17 +50,17 @@
     >
       <el-table-column label="HouseID" prop="id"  align="center" width="80">
         <template slot-scope="{row}">
-          <span>{{ row.HouseID }}</span>
+          <span>{{ row.houseId }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="房源地址" prop="id"  align="center" width="80">
+      <el-table-column label="房源地址" prop="id"  align="center" width="200">
         <template slot-scope="{row}">
           <span>{{ row.address }}</span>
         </template>
       </el-table-column>
       <el-table-column label="BossID" prop="id"  align="center" width="80">
         <template slot-scope="{row}">
-          <span>{{ row.BossID }}</span>
+          <span>{{ row.bossId }}</span>
         </template>
       </el-table-column>
       <el-table-column label="房东名称" prop="id"  align="center" width="80">
@@ -50,34 +68,49 @@
           <span>{{ row.ownerName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="房东电话号" prop="id"  align="center" width="80">
+      <el-table-column label="房东电话号" prop="id"  align="center" width="120">
         <template slot-scope="{row}">
           <span>{{ row.ownerPhoneNumber }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="收款人名称" prop="id"  align="center" width="80">
+      <el-table-column label="收款人名称" prop="id"  align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.payeeName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="收款人手机号" prop="id"  align="center" width="80">
+      <el-table-column label="收款人手机号" prop="id"  align="center" width="120">
         <template slot-scope="{row}">
           <span>{{ row.payeePhoneNumber }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="合同开始日期" prop="id"  align="center" width="80">
+      <el-table-column label="合同开始日期" prop="id"  align="center" width="120">
         <template slot-scope="{row}">
           <span>{{ row.contractStartTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="合同结束日期" prop="id"  align="center" width="80">
+      <el-table-column label="合同结束日期" prop="id"  align="center" width="120">
         <template slot-scope="{row}">
           <span>{{ row.contractEndTime }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="合同编号" prop="id"  align="center" width="120">
+        <template slot-scope="{row}">
+          <span>{{ row.contractCode }}</span>
         </template>
       </el-table-column>
       <el-table-column label="租住类型" prop="id"  align="center" width="80">
         <template slot-scope="{row}">
           <span>{{ row.rentedTypeStr }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="付款类型" prop="id"  align="center" width="80">
+        <template slot-scope="{row}">
+          <span>{{ row.payorTypeStr }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="收款账号" prop="id"  align="center" width="120">
+        <template slot-scope="{row}">
+          <span>{{ row.payeeAccount }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
@@ -102,7 +135,34 @@
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="姓名" prop="姓名">
+        <el-form-item label="房源地址" prop="房源地址">
+          <el-input v-model="temp.name" placeholder="请填写姓名"/>
+        </el-form-item>
+        <el-form-item label="BossId" prop="BossId">
+          <el-input v-model="temp.phoneNumber" placeholder="请填写手机号码"/>
+        </el-form-item>
+        <el-form-item label="房东名称" prop="房东名称">
+          <el-date-picker v-model="temp.createTime" type="datetime" placeholder="请选择上任时间" />
+        </el-form-item>
+        <el-form-item label="房东电话号" prop="房东电话号">
+          <el-input v-model="temp.name" placeholder="请填写姓名"/>
+        </el-form-item>
+        <el-form-item label="收款人名称" prop="收款人名称">
+          <el-input v-model="temp.phoneNumber" placeholder="请填写手机号码"/>
+        </el-form-item>
+        <el-form-item label="收款人手机号" prop="收款人手机号">
+          <el-date-picker v-model="temp.createTime" type="datetime" placeholder="请选择上任时间" />
+        </el-form-item>
+        <el-form-item label="合同开始日期" prop="合同开始日期">
+          <el-input v-model="temp.name" placeholder="请填写姓名"/>
+        </el-form-item>
+        <el-form-item label="合同结束日期" prop="合同结束日期">
+          <el-input v-model="temp.phoneNumber" placeholder="请填写手机号码"/>
+        </el-form-item>
+        <el-form-item label="合同编号" prop="合同编号">
+          <el-date-picker v-model="temp.createTime" type="datetime" placeholder="请选择上任时间" />
+        </el-form-item>
+        <el-form-item label="租住类型" prop="租住类型">
           <el-input v-model="temp.name" placeholder="请填写姓名"/>
         </el-form-item>
         <el-form-item label="手机号码" prop="手机号码">
@@ -110,6 +170,12 @@
         </el-form-item>
         <el-form-item label="上任时间" prop="上任时间">
           <el-date-picker v-model="temp.createTime" type="datetime" placeholder="请选择上任时间" />
+        </el-form-item>
+        <el-form-item label="付款类型" prop="付款类型">
+          <el-input v-model="temp.name" placeholder="请填写姓名"/>
+        </el-form-item>
+        <el-form-item label="收款账号" prop="收款账号">
+          <el-input v-model="temp.phoneNumber" placeholder="请填写手机号码"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -137,7 +203,7 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import { fetchPv } from '@/api/article'
-import { selectByPage, add, update} from '@/api/fangdichanhaixia/boss'
+import { selectByPage, add, update} from '@/api/fangdichanhaixia/house'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -180,8 +246,17 @@ export default {
       listLoading: true,
       listQuery: {
         id: null,
-        name: null,
-        phoneNumber: null,
+        bossId: null,
+        address: null,
+        ownerName: null,
+        ownerPhoneNumber: null,
+        payeeName: null,
+        payeePhoneNumber: null,
+        contractStartTime: null,
+        contractEndTime: null,
+        rentedType: null,
+        contractCode: null,
+        payeeAccount: null,
         pageNum: 1,
         pageSize: 20
       },
@@ -223,7 +298,6 @@ export default {
       selectByPage(this.listQuery).then(response => {
         this.list = response.content.data
         this.total = response.content.totalCount
-
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
