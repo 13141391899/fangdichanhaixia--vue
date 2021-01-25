@@ -2,11 +2,11 @@
   <div class="app-container">
     <div class="filter-container">
       <el-sl-panel style="border-left: 60px" class="filter-item">bossID:</el-sl-panel>
-      <el-input v-model="listQuery.title" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.id" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-sl-panel style="border-left: 60px" class="filter-item">姓名:</el-sl-panel>
-      <el-input v-model="listQuery.title" placeholder="姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.name" placeholder="姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-sl-panel style="border-left: 60px" class="filter-item">手机号码:</el-sl-panel>
-      <el-input v-model="listQuery.title" placeholder="手机号码" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.phoneNumber" placeholder="手机号码" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
@@ -29,27 +29,25 @@
       fit
       highlight-current-row
       style="width: 100%;"
-      @sort-change="sortChange"
     >
-      <el-table-column label="BossID" prop="id" sortable="custom" align="center" width="80" :class-name="getSortClass('id')">
+      <el-table-column label="BossID" prop="id"  align="center" width="80">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
       <el-table-column label="姓名" width="150px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.author }}</span>
+          <span>{{ row.name }}</span>
         </template>
       </el-table-column>
       <el-table-column label="手机号" min-width="150px" align="center">
         <template slot-scope="{row}">
-          <span class="link-type" @click="handleUpdate(row)">{{ row.title }}</span>
-          <el-tag>{{ row.type | typeFilter }}</el-tag>
+          <span>{{ row.phoneNumber }}</span>
         </template>
       </el-table-column>
       <el-table-column label="上任时间" width="110px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.timestamp | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.createTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
@@ -70,18 +68,18 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.page" :limit.sync="listQuery.limit" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
         <el-form-item label="姓名" prop="姓名">
-          <el-input v-model="temp.title" />
+          <el-input v-model="temp.name" placeholder="请填写姓名"/>
         </el-form-item>
         <el-form-item label="手机号码" prop="手机号码">
-          <el-input v-model="temp.title" />
+          <el-input v-model="temp.phoneNumber" placeholder="请填写手机号码"/>
         </el-form-item>
         <el-form-item label="上任时间" prop="上任时间">
-          <el-date-picker v-model="temp.timestamp" type="datetime" placeholder="Please pick a date" />
+          <el-date-picker v-model="temp.createTime" type="datetime" placeholder="请选择上任时间" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -107,8 +105,9 @@
 </template>
 
 <script>
-import { fetchList, fetchPv, createArticle, updateArticle } from '@/api/article'
-import { selectByPage} from '@/api/boss'
+// eslint-disable-next-line no-unused-vars
+import { fetchPv, createArticle, updateArticle } from '@/api/article'
+import { selectByPage, add, update} from '@/api/fangdichanhaixia/boss'
 import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
@@ -150,16 +149,14 @@ export default {
       total: 0,
       listLoading: true,
       listQuery: {
+        id: null,
+        name: null,
+        phoneNumber: null,
         pageNum: 1,
-        pageSize: 20,
-        importance: undefined,
-        title: undefined,
-        type: undefined,
-        sort: '+id'
+        pageSize: 20
       },
       importanceOptions: [1, 2, 3],
       calendarTypeOptions,
-      sortOptions: [{ label: 'ID Ascending', key: '+id' }, { label: 'ID Descending', key: '-id' }],
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
       temp: {
@@ -191,11 +188,11 @@ export default {
     this.getList()
   },
   methods: {
-    selectByPage() {
+    getList() {
       this.listLoading = true
       selectByPage(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
+        this.list = response.content.data
+        this.total = response.content.totalCount
 
         // Just to simulate the time of the request
         setTimeout(() => {
@@ -203,7 +200,7 @@ export default {
         }, 1.5 * 1000)
       })
     },
-    getList() {
+    /* getList() {
       this.listLoading = true
       fetchList(this.listQuery).then(response => {
         this.list = response.data.items
@@ -214,11 +211,11 @@ export default {
           this.listLoading = false
         }, 1.5 * 1000)
       })
-    },
+    },*/
     handleFilter() {
-      this.listQuery.page = 1
+      this.listQuery.pageNum = 1
       console.log(this.listQuery)
-      this.selectByPage()
+      this.getList()
     },
     handleModifyStatus(row, status) {
       this.$message({
@@ -226,20 +223,6 @@ export default {
         type: 'success'
       })
       row.status = status
-    },
-    sortChange(data) {
-      const { prop, order } = data
-      if (prop === 'id') {
-        this.sortByID(order)
-      }
-    },
-    sortByID(order) {
-      if (order === 'ascending') {
-        this.listQuery.sort = '+id'
-      } else {
-        this.listQuery.sort = '-id'
-      }
-      this.handleFilter()
     },
     resetTemp() {
       this.temp = {
@@ -265,15 +248,15 @@ export default {
         if (valid) {
           this.temp.id = parseInt(Math.random() * 100) + 1024 // mock a id
           this.temp.author = 'vue-element-admin'
-          createArticle(this.temp).then(() => {
-            this.list.unshift(this.temp)
+          add(this.temp).then(response => {
             this.dialogFormVisible = false
             this.$notify({
-              title: 'Success',
-              message: 'Created Successfully',
+              title: '新增老板信息 成功',
+              message: '新增老板信息 成功',
               type: 'success',
               duration: 2000
             })
+            this.handleFilter()
           })
         }
       })
@@ -292,16 +275,15 @@ export default {
         if (valid) {
           const tempData = Object.assign({}, this.temp)
           tempData.timestamp = +new Date(tempData.timestamp) // change Thu Nov 30 2017 16:41:05 GMT+0800 (CST) to 1512031311464
-          updateArticle(tempData).then(() => {
-            const index = this.list.findIndex(v => v.id === this.temp.id)
-            this.list.splice(index, 1, this.temp)
+          update(this.temp).then(response => {
             this.dialogFormVisible = false
             this.$notify({
-              title: 'Success',
-              message: 'Update Successfully',
+              title: '修改老板信息 成功',
+              message: '修改老板信息 成功',
               type: 'success',
               duration: 2000
             })
+            this.handleFilter()
           })
         }
       })
@@ -343,10 +325,6 @@ export default {
           return v[j]
         }
       }))
-    },
-    getSortClass: function(key) {
-      const sort = this.listQuery.sort
-      return sort === `+${key}` ? 'ascending' : 'descending'
     }
   }
 }

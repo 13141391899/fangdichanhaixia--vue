@@ -7,6 +7,7 @@ Vue.use(Router)
 import Layout from '@/layout'
 
 /* Router Modules */
+import tableRouter from './modules/table'
 
 export const constantRoutes = [
   {
@@ -61,12 +62,27 @@ export const constantRoutes = [
     children: [
       {
         path: 'bossList',
-        component: () => import('@/views/boss/List'),
+        component: () => import('@/views/fangdichanhaixia/boss/List'),
         name: '老板信息列表',
         meta: { title: '老板信息列表', icon: 'dashboard', affix: true }
       }
     ]
-  }
+  },
+
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/houseList',
+    children: [
+      {
+        path: 'houseList',
+        component: () => import('@/views/fangdichanhaixia/house/List'),
+        name: '房源信息列表',
+        meta: { title: '房源信息列表', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+  tableRouter
 ]
 
 /**
