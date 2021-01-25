@@ -16,11 +16,11 @@
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">收款人手机号:</el-sl-panel>
       <el-input v-model="listQuery.payeePhoneNumber" placeholder="收款人手机号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">租住类型:</el-sl-panel>
-      <el-input v-model="listQuery.rentedType" placeholder="租住类型" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-option v-for="item in rentTypeOption" :key="item.key" :label="item.display_name" :value="item.key" />
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">合同编号:</el-sl-panel>
       <el-input v-model="listQuery.contractCode" placeholder="合同编号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">付款类型:</el-sl-panel>
-      <el-input v-model="listQuery.payorType" placeholder="付款类型" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-option v-for="item in payRentTypeOption" :key="item.key" :label="item.display_name" :value="item.key" />
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">收款账号:</el-sl-panel>
       <el-input v-model="listQuery.payeeAccount" placeholder="收款账号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">合同开始时间:</el-sl-panel>
@@ -52,7 +52,7 @@
     >
       <el-table-column label="HouseID" prop="id" align="center" width="80">
         <template slot-scope="{row}">
-          <span>{{ row.houseId }}</span>
+          <span>{{ row.id }}</span>
         </template>
       </el-table-column>
       <el-table-column label="房源地址" prop="id" align="center" width="200">
@@ -204,15 +204,19 @@ import waves from '@/directive/waves' // waves directive
 import { parseTime } from '@/utils'
 import Pagination from '@/components/Pagination' // secondary package based on el-pagination
 
-const calendarTypeOptions = [
-  { key: 'CN', display_name: 'China' },
-  { key: 'US', display_name: 'USA' },
-  { key: 'JP', display_name: 'Japan' },
-  { key: 'EU', display_name: 'Eurozone' }
+const payRentTypeOption = [
+  { key: '1', display_name: '年付' },
+  { key: '2', display_name: '半年付' },
+  { key: '3', display_name: '押一付三' },
+  { key: '4', display_name: '押一付一' }
+]
+const rentTypeOption = [
+  { key: '1', display_name: '整租' },
+  { key: '2', display_name: '合租' }
 ]
 
 // arr to obj, such as { CN : "China", US : "USA" }
-const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
+const payRentTypeKeyValue = payRentTypeOption.reduce((acc, cur) => {
   acc[cur.key] = cur.display_name
   return acc
 }, {})
@@ -230,8 +234,8 @@ export default {
       }
       return statusMap[status]
     },
-    typeFilter(type) {
-      return calendarTypeKeyValue[type]
+    payRentTypeFilter(type) {
+      return payRentTypeKeyValue[type]
     }
   },
   data() {
@@ -257,7 +261,8 @@ export default {
         pageSize: 20
       },
       importanceOptions: [1, 2, 3],
-      calendarTypeOptions,
+      rentTypeOption,
+      payRentTypeOption,
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
       temp: {
