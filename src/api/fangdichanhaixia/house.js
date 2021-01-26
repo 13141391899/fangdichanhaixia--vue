@@ -1,6 +1,8 @@
 import request from '@/utils/request'
+
 var host = 'http://localhost:'
 var port = 7001
+
 export function selectByPage(data) {
   var path = '/fangdichanhaixia/houseInfo/selectByPage'
   return request({
@@ -21,6 +23,15 @@ export function add(data) {
 
 export function update(data) {
   var path = '/fangdichanhaixia/houseInfo/update'
+  return request({
+    url: host + port + path,
+    method: 'post',
+    data
+  })
+}
+
+export function deleteBatch(data) {
+  var path = '/fangdichanhaixia/houseInfo/deleteBatch'
   return request({
     url: host + port + path,
     method: 'post',

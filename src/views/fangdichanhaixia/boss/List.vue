@@ -2,11 +2,11 @@
   <div class="app-container">
     <div class="filter-container">
       <el-sl-panel style="border-left: 60px" class="filter-item">bossID:</el-sl-panel>
-      <el-input v-model="listQuery.id" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.id" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-sl-panel style="border-left: 60px" class="filter-item">姓名:</el-sl-panel>
-      <el-input v-model="listQuery.name" placeholder="姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.name" placeholder="姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-sl-panel style="border-left: 60px" class="filter-item">手机号码:</el-sl-panel>
-      <el-input v-model="listQuery.phoneNumber" placeholder="手机号码" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.phoneNumber" placeholder="手机号码" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
@@ -30,7 +30,7 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column label="BossID" prop="id"  align="center" width="80">
+      <el-table-column label="BossID" prop="id" align="center" width="80">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
@@ -68,7 +68,7 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList"/>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
@@ -79,7 +79,7 @@
           <el-input v-model="temp.phoneNumber" placeholder="请填写手机号码"/>
         </el-form-item>
         <el-form-item label="上任时间" prop="上任时间">
-          <el-date-picker v-model="temp.createTime" type="datetime" placeholder="请选择上任时间" />
+          <el-date-picker v-model="temp.createTime" type="datetime" placeholder="请选择上任时间"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -94,8 +94,8 @@
 
     <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
       <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel" />
-        <el-table-column prop="pv" label="Pv" />
+        <el-table-column prop="key" label="Channel"/>
+        <el-table-column prop="pv" label="Pv"/>
       </el-table>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
@@ -106,17 +106,18 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { fetchPv, createArticle, updateArticle } from '@/api/article'
-import { selectByPage, add, update} from '@/api/fangdichanhaixia/boss'
+import {fetchPv, createArticle, updateArticle} from '@/api/article'
+import {selectByPage, add, update} from '@/api/fangdichanhaixia/boss'
 import waves from '@/directive/waves' // waves directive
-import { parseTime } from '@/utils'
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import {parseTime} from '@/utils'
+import Pagination from '@/components/Pagination'
+import {deleteBatch} from "@/api/fangdichanhaixia/house"; // secondary package based on el-pagination
 
 const calendarTypeOptions = [
-  { key: 'CN', display_name: 'China' },
-  { key: 'US', display_name: 'USA' },
-  { key: 'JP', display_name: 'Japan' },
-  { key: 'EU', display_name: 'Eurozone' }
+  {key: 'CN', display_name: 'China'},
+  {key: 'US', display_name: 'USA'},
+  {key: 'JP', display_name: 'Japan'},
+  {key: 'EU', display_name: 'Eurozone'}
 ]
 
 // arr to obj, such as { CN : "China", US : "USA" }
@@ -127,8 +128,8 @@ const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
 
 export default {
   name: 'ComplexTable',
-  components: { Pagination },
-  directives: { waves },
+  components: {Pagination},
+  directives: {waves},
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -177,9 +178,9 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+        type: [{required: true, message: 'type is required', trigger: 'change'}],
+        timestamp: [{type: 'date', required: true, message: 'timestamp is required', trigger: 'change'}],
+        title: [{required: true, message: 'title is required', trigger: 'blur'}]
       },
       downloadLoading: false
     }
@@ -288,14 +289,29 @@ export default {
         }
       })
     },
-    handleDelete(row, index) {
-      this.$notify({
-        title: 'Success',
-        message: 'Delete Successfully',
-        type: 'success',
-        duration: 2000
+    handleDelete(row) {
+      this.$confirm('此操作将删除该领用订单, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
-      this.list.splice(index, 1)
+        .then(async () => {
+          const ids = []
+          ids.push(row.id)
+          this.deleteData(ids)
+          this.handleFilter()
+        })
+    },
+    deleteData(ids) {
+      deleteBatch(ids).then(response => {
+        this.$notify({
+          title: '删除老板信息 成功',
+          message: '删除老板信息 成功',
+          type: 'success',
+          duration: 2000
+        })
+        this.handleFilter()
+      })
     },
     handleFetchPv(pv) {
       fetchPv(pv).then(response => {

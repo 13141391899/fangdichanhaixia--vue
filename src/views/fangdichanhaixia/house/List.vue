@@ -2,31 +2,35 @@
   <div class="app-container">
     <div class="filter-container">
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">houseID:</el-sl-panel>
-      <el-input v-model="listQuery.id" placeholder="houseID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.id" placeholder="houseID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">bossID:</el-sl-panel>
-      <el-input v-model="listQuery.bossId" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.bossId" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">房源地址:</el-sl-panel>
-      <el-input v-model="listQuery.address" placeholder="房源地址" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.address" placeholder="房源地址" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">房东名称:</el-sl-panel>
-      <el-input v-model="listQuery.ownerName" placeholder="房东名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.ownerName" placeholder="房东名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">房东电话号:</el-sl-panel>
-      <el-input v-model="listQuery.ownerPhoneNumber" placeholder="房东电话号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.ownerPhoneNumber" placeholder="房东电话号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">收款人名称:</el-sl-panel>
-      <el-input v-model="listQuery.payeeName" placeholder="收款人名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.payeeName" placeholder="收款人名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">收款人手机号:</el-sl-panel>
-      <el-input v-model="listQuery.payeePhoneNumber" placeholder="收款人手机号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.payeePhoneNumber" placeholder="收款人手机号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">租住类型:</el-sl-panel>
-      <el-option v-for="item in rentTypeOption" :key="item.key" :label="item.display_name" :value="item.key" />
+      <el-select v-model="listQuery.rentType" placeholder="租住类型" clearable class="filter-item" style="width: 130px">
+        <el-option v-for="item in rentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
+      </el-select>
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">合同编号:</el-sl-panel>
-      <el-input v-model="listQuery.contractCode" placeholder="合同编号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.contractCode" placeholder="合同编号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">付款类型:</el-sl-panel>
-      <el-option v-for="item in payRentTypeOption" :key="item.key" :label="item.display_name" :value="item.key" />
+      <el-select v-model="listQuery.payorType" placeholder="付款类型" clearable class="filter-item" style="width: 130px">
+        <el-option v-for="item in payRentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
+      </el-select>
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">收款账号:</el-sl-panel>
-      <el-input v-model="listQuery.payeeAccount" placeholder="收款账号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.payeeAccount" placeholder="收款账号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">合同开始时间:</el-sl-panel>
-      <el-input v-model="listQuery.contractStartTime" placeholder="合同起止时间" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.contractStartTime" placeholder="合同起止时间" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">合同结束时间:</el-sl-panel>
-      <el-input v-model="listQuery.contractEndTime" placeholder="合同起止时间" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
+      <el-input v-model="listQuery.contractEndTime" placeholder="合同起止时间" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
@@ -133,45 +137,49 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList"/>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
         <el-form-item label="房源地址" prop="房源地址">
-          <el-input v-model="temp.address" placeholder="请填写房源地址" />
+          <el-input v-model="temp.address" placeholder="请填写房源地址"/>
         </el-form-item>
         <el-form-item label="BossId" prop="BossId">
-          <el-input v-model="temp.bossId" placeholder="请填写BossId" />
+          <el-input v-model="temp.bossId" placeholder="请填写BossId"/>
         </el-form-item>
         <el-form-item label="房东名称" prop="房东名称">
-          <el-input v-model="temp.ownerName" placeholder="请填写房东名称" />
+          <el-input v-model="temp.ownerName" placeholder="请填写房东名称"/>
         </el-form-item>
         <el-form-item label="房东电话号" prop="房东电话号">
-          <el-input v-model="temp.ownerPhoneNumber" placeholder="请填写房东电话号" />
+          <el-input v-model="temp.ownerPhoneNumber" placeholder="请填写房东电话号"/>
         </el-form-item>
         <el-form-item label="收款人名称" prop="收款人名称">
-          <el-input v-model="temp.payeeName" placeholder="请填写收款人名称" />
+          <el-input v-model="temp.payeeName" placeholder="请填写收款人名称"/>
         </el-form-item>
         <el-form-item label="收款人手机号" prop="收款人手机号">
-          <el-input v-model="temp.payeePhoneNumber" placeholder="请填写收款人手机号" />
+          <el-input v-model="temp.payeePhoneNumber" placeholder="请填写收款人手机号"/>
         </el-form-item>
         <el-form-item label="合同开始日期" prop="合同开始日期">
-          <el-date-picker v-model="temp.contractStartTime" type="datetime" placeholder="请选择合同开始日期" />
+          <el-date-picker v-model="temp.contractStartTime" type="datetime" placeholder="请选择合同开始日期"/>
         </el-form-item>
         <el-form-item label="合同结束日期" prop="合同结束日期">
-          <el-date-picker v-model="temp.contractEndTime" type="datetime" placeholder="请选择合同结束日期" />
+          <el-date-picker v-model="temp.contractEndTime" type="datetime" placeholder="请选择合同结束日期"/>
         </el-form-item>
         <el-form-item label="合同编号" prop="合同编号">
-          <el-input v-model="temp.contractCode" placeholder="请填写合同编号" />
+          <el-input v-model="temp.contractCode" placeholder="请填写合同编号"/>
         </el-form-item>
         <el-form-item label="租住类型" prop="租住类型">
-          <el-input v-model="temp.rentedType" placeholder="请选择租住类型" />
+          <el-select v-model="temp.rentedType" placeholder="请选择租住类型" clearable class="filter-item" style="width: 130px">
+            <el-option v-for="item in rentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
+          </el-select>
         </el-form-item>
         <el-form-item label="付款类型" prop="付款类型">
-          <el-input v-model="temp.payorType" placeholder="请选择付款类型" />
+          <el-select v-model="temp.payorType" placeholder="请选择付款类型" clearable class="filter-item" style="width: 130px">
+            <el-option v-for="item in payRentTypeOptions" :label="item.display_name" :value="item.key"/>
+          </el-select>
         </el-form-item>
         <el-form-item label="收款账号" prop="收款账号">
-          <el-input v-model="temp.payeeAccount" placeholder="请填收款账号" />
+          <el-input v-model="temp.payeeAccount" placeholder="请填收款账号"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -186,8 +194,8 @@
 
     <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
       <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel" />
-        <el-table-column prop="pv" label="Pv" />
+        <el-table-column prop="key" label="Channel"/>
+        <el-table-column prop="pv" label="Pv"/>
       </el-table>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
@@ -198,33 +206,34 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { fetchPv } from '@/api/article'
-import { selectByPage, add, update } from '@/api/fangdichanhaixia/house'
+import {fetchPv} from '@/api/article'
+import {selectByPage, add, update, deleteBatch} from '@/api/fangdichanhaixia/house'
 import waves from '@/directive/waves' // waves directive
-import { parseTime } from '@/utils'
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import {parseTime} from '@/utils'
+import Pagination from '@/components/Pagination'
+import {deleteRole} from "@/api/role"; // secondary package based on el-pagination
 
-const payRentTypeOption = [
-  { key: '1', display_name: '年付' },
-  { key: '2', display_name: '半年付' },
-  { key: '3', display_name: '押一付三' },
-  { key: '4', display_name: '押一付一' }
+const payRentTypeOptions = [
+  {key: 1, display_name: '年付'},
+  {key: 2, display_name: '半年付'},
+  {key: 3, display_name: '押一付三'},
+  {key: 4, display_name: '押一付一'}
 ]
-const rentTypeOption = [
-  { key: '1', display_name: '整租' },
-  { key: '2', display_name: '合租' }
+const rentTypeOptions = [
+  {key: 1, display_name: '整租'},
+  {key: 2, display_name: '合租'}
 ]
 
 // arr to obj, such as { CN : "China", US : "USA" }
-const payRentTypeKeyValue = payRentTypeOption.reduce((acc, cur) => {
+const payRentTypeKeyValue = payRentTypeOptions.reduce((acc, cur) => {
   acc[cur.key] = cur.display_name
   return acc
 }, {})
 
 export default {
   name: 'ComplexTable',
-  components: { Pagination },
-  directives: { waves },
+  components: {Pagination},
+  directives: {waves},
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -257,22 +266,29 @@ export default {
         rentedType: null,
         contractCode: null,
         payeeAccount: null,
+        payorType: null,
         pageNum: 1,
         pageSize: 20
       },
       importanceOptions: [1, 2, 3],
-      rentTypeOption,
-      payRentTypeOption,
+      rentTypeOptions,
+      payRentTypeOptions,
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
       temp: {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
+        id: null,
+        bossId: null,
+        address: null,
+        ownerName: null,
+        ownerPhoneNumber: null,
+        payeeName: null,
+        payeePhoneNumber: null,
+        contractStartTime: null,
+        contractEndTime: null,
+        rentedType: null,
+        contractCode: null,
+        payeeAccount: null,
+        payorType: null
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -283,9 +299,9 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+        type: [{required: true, message: 'type is required', trigger: 'change'}],
+        timestamp: [{type: 'date', required: true, message: 'timestamp is required', trigger: 'change'}],
+        title: [{required: true, message: 'title is required', trigger: 'blur'}]
       },
       downloadLoading: false
     }
@@ -305,18 +321,6 @@ export default {
         }, 1.5 * 1000)
       })
     },
-    /* getList() {
-      this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
-
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
-      })
-    },*/
     handleFilter() {
       this.listQuery.pageNum = 1
       console.log(this.listQuery)
@@ -393,14 +397,29 @@ export default {
         }
       })
     },
-    handleDelete(row, index) {
-      this.$notify({
-        title: 'Success',
-        message: 'Delete Successfully',
-        type: 'success',
-        duration: 2000
+    handleDelete(row) {
+      this.$confirm('此操作将删除该领用订单, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
-      this.list.splice(index, 1)
+        .then(async () => {
+          const ids = []
+          ids.push(row.id)
+          this.deleteData(ids)
+          this.handleFilter()
+        })
+    },
+    deleteData(ids) {
+      deleteBatch(ids).then(response => {
+        this.$notify({
+          title: '删除老板信息 成功',
+          message: '删除老板信息 成功',
+          type: 'success',
+          duration: 2000
+        })
+        this.handleFilter()
+      })
     },
     handleFetchPv(pv) {
       fetchPv(pv).then(response => {

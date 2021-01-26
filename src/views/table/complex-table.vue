@@ -312,6 +312,7 @@ export default {
       this.$nextTick(() => {
         this.$refs['dataForm'].clearValidate()
       })
+      this.temp
     },
     updateData() {
       this.$refs['dataForm'].validate((valid) => {
