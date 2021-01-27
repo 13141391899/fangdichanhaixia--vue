@@ -1,11 +1,11 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-sl-panel style="border-left: 60px" class="filter-item">bossID:</el-sl-panel>
+      <el-sl-panel style="border-left: 60px;width: 100px;text-align: right" class="filter-item">bossID:</el-sl-panel>
       <el-input v-model="listQuery.id" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px" class="filter-item">姓名:</el-sl-panel>
+      <el-sl-panel style="border-left: 60px;margin-left: 70px;width: 100px;text-align: right" class="filter-item">姓名:</el-sl-panel>
       <el-input v-model="listQuery.name" placeholder="姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px" class="filter-item">手机号码:</el-sl-panel>
+      <el-sl-panel style="border-left: 60px;margin-left: 70px;width: 100px;text-align: right" class="filter-item">手机号码:</el-sl-panel>
       <el-input v-model="listQuery.phoneNumber" placeholder="手机号码" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
@@ -16,9 +16,6 @@
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
         Export
       </el-button>
-      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        reviewer
-      </el-checkbox>
     </div>
 
     <el-table
@@ -201,18 +198,6 @@ export default {
         }, 1.5 * 1000)
       })
     },
-    /* getList() {
-      this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
-
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
-      })
-    },*/
     handleFilter() {
       this.listQuery.pageNum = 1
       console.log(this.listQuery)
@@ -290,7 +275,7 @@ export default {
       })
     },
     handleDelete(row) {
-      this.$confirm('此操作将删除该领用订单, 是否继续?', '提示', {
+      this.$confirm('此操作将删除该老板信息, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'

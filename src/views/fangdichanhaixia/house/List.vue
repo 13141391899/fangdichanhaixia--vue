@@ -1,36 +1,84 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">houseID:</el-sl-panel>
-      <el-input v-model="listQuery.id" placeholder="houseID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">bossID:</el-sl-panel>
-      <el-input v-model="listQuery.bossId" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">房源地址:</el-sl-panel>
-      <el-input v-model="listQuery.address" placeholder="房源地址" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">房东名称:</el-sl-panel>
-      <el-input v-model="listQuery.ownerName" placeholder="房东名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">房东电话号:</el-sl-panel>
-      <el-input v-model="listQuery.ownerPhoneNumber" placeholder="房东电话号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">收款人名称:</el-sl-panel>
-      <el-input v-model="listQuery.payeeName" placeholder="收款人名称" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">收款人手机号:</el-sl-panel>
-      <el-input v-model="listQuery.payeePhoneNumber" placeholder="收款人手机号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">租住类型:</el-sl-panel>
-      <el-select v-model="listQuery.rentType" placeholder="租住类型" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in rentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
-      </el-select>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">合同编号:</el-sl-panel>
-      <el-input v-model="listQuery.contractCode" placeholder="合同编号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">付款类型:</el-sl-panel>
-      <el-select v-model="listQuery.payorType" placeholder="付款类型" clearable class="filter-item" style="width: 130px">
-        <el-option v-for="item in payRentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
-      </el-select>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">收款账号:</el-sl-panel>
-      <el-input v-model="listQuery.payeeAccount" placeholder="收款账号" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">合同开始时间:</el-sl-panel>
-      <el-input v-model="listQuery.contractStartTime" placeholder="合同起止时间" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px" class="filter-item">合同结束时间:</el-sl-panel>
-      <el-input v-model="listQuery.contractEndTime" placeholder="合同起止时间" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
+      <el-form ref="form" :model="form" label-width="100px">
+        <el-row :gutter="24">
+          <el-col :span="6">
+            <el-form-item label="houseID:" :span="2">
+              <el-input v-model="listQuery.id" :span="4"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="bossID:">
+              <el-input v-model="listQuery.bossId"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="房源地址:">
+              <el-input v-model="listQuery.address"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="房东名称:">
+              <el-input v-model="listQuery.ownerName"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-form-item label="房东电话号:">
+              <el-input v-model="listQuery.ownerPhoneNumber"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="收款人名称:">
+              <el-input v-model="listQuery.payeeName"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="收款人手机号:">
+              <el-input v-model="listQuery.payeePhoneNumber"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="租住类型:">
+              <el-select v-model="listQuery.rentType" placeholder="租住类型" clearable class="filter-item" style="width: 200px">
+                <el-option v-for="item in rentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="6">
+            <el-form-item label="合同编号:">
+              <el-input v-model="listQuery.contractCode"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="付款类型:">
+              <el-select v-model="listQuery.payorType" placeholder="付款类型" clearable class="filter-item" style="width: 200px">
+                <el-option v-for="item in payRentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+
+          <el-col :span="6">
+            <el-form-item label="收款账号:">
+              <el-input v-model="listQuery.payeeAccount"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="合同开始时间:">
+              <el-date-picker v-model="temp.contractStartTime" type="datetime" placeholder="请选择合同开始日期"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="合同结束时间:">
+              <el-date-picker v-model="temp.contractEndTime" type="datetime" placeholder="请选择合同开始日期"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+      </el-form>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
@@ -40,9 +88,6 @@
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
         Export
       </el-button>
-      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        reviewer
-      </el-checkbox>
     </div>
 
     <el-table
@@ -360,8 +405,8 @@ export default {
           add(this.temp).then(response => {
             this.dialogFormVisible = false
             this.$notify({
-              title: '新增老板信息 成功',
-              message: '新增老板信息 成功',
+              title: '新增房源信息 成功',
+              message: '新增房源信息 成功',
               type: 'success',
               duration: 2000
             })
@@ -387,8 +432,8 @@ export default {
           update(this.temp).then(response => {
             this.dialogFormVisible = false
             this.$notify({
-              title: '修改老板信息 成功',
-              message: '修改老板信息 成功',
+              title: '修改房源信息 成功',
+              message: '修改房源信息 成功',
               type: 'success',
               duration: 2000
             })
@@ -398,7 +443,7 @@ export default {
       })
     },
     handleDelete(row) {
-      this.$confirm('此操作将删除该领用订单, 是否继续?', '提示', {
+      this.$confirm('此操作将删除该房源信息, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -413,8 +458,8 @@ export default {
     deleteData(ids) {
       deleteBatch(ids).then(response => {
         this.$notify({
-          title: '删除老板信息 成功',
-          message: '删除老板信息 成功',
+          title: '删除房源信息 成功',
+          message: '删除房源信息 成功',
           type: 'success',
           duration: 2000
         })
