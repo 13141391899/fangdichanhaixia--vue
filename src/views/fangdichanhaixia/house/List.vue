@@ -48,7 +48,9 @@
               </el-select>
             </el-form-item>
           </el-col>
+        </el-row>
 
+        <el-row :gutter="20">
           <el-col :span="6">
             <el-form-item label="合同编号:">
               <el-input v-model="listQuery.contractCode"></el-input>
@@ -56,7 +58,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="付款类型:">
-              <el-select v-model="listQuery.payorType" placeholder="付款类型" clearable class="filter-item" style="width: 200px">
+              <el-select v-model="listQuery.payorType" placeholder="付款类型" clearable class="filter-item" >
                 <el-option v-for="item in payRentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
               </el-select>
             </el-form-item>
@@ -69,25 +71,28 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="合同开始时间:">
-              <el-date-picker v-model="temp.contractStartTime" type="datetime" placeholder="请选择合同开始日期"/>
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="合同结束时间:">
-              <el-date-picker v-model="temp.contractEndTime" type="datetime" placeholder="请选择合同开始日期"/>
+              <el-date-picker v-model="temp.contractStartTime" type="date" style="width: 100%;" :picker-options="pickerOptions" placeholder="请选择合同开始日期" />
             </el-form-item>
           </el-col>
         </el-row>
+
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-form-item label="合同结束时间:">
+              <el-date-picker v-model="temp.contractEndTime" type="date" style="width: 100%;" :picker-options="pickerOptions" placeholder="请选择合同开始日期" />
+            </el-form-item>
+          </el-col>
+          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+            Search
+          </el-button>
+          <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+            Add
+          </el-button>
+          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+            Export
+          </el-button>
+        </el-row>
       </el-form>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        Search
-      </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        Add
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        Export
-      </el-button>
     </div>
 
     <el-table
@@ -475,8 +480,8 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+        const tHeader = ['HouseId', '房源地址', 'bossID', '房东名称', '房东电话号']
+        const filterVal = ['id', 'address', 'bossId', 'bossId', 'bossId']
         const data = this.formatJson(filterVal)
         excel.export_json_to_excel({
           header: tHeader,
