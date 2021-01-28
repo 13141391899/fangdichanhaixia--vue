@@ -96,6 +96,36 @@ export const constantRoutes = [
       }
     ]
   },
+
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/payList',
+    children: [
+      {
+        path: 'payList',
+        component: () => import('@/views/fangdichanhaixia/pay/List'),
+        name: '支付信息列表',
+        meta: { title: '支付信息列表', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/opLogList',
+    children: [
+      {
+        path: 'opLogList',
+        component: () => import('@/views/fangdichanhaixia/oplog/List'),
+        name: '操作日志列表',
+        meta: { title: '操作日志列表', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
+
+
   tableRouter
 ]
 

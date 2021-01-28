@@ -1,24 +1,69 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-sl-panel style="border-left: 60px" class="filter-item">bossID:</el-sl-panel>
-      <el-input v-model="listQuery.id" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-sl-panel style="border-left: 60px" class="filter-item">姓名:</el-sl-panel>
-      <el-input v-model="listQuery.name" placeholder="姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-sl-panel style="border-left: 60px" class="filter-item">手机号码:</el-sl-panel>
-      <el-input v-model="listQuery.phoneNumber" placeholder="手机号码" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        Search
-      </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        Add
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        Export
-      </el-button>
-      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        reviewer
-      </el-checkbox>
+      <el-form ref="form" :model="form" label-width="100px">
+        <el-row :gutter="24">
+          <el-col :span="6">
+            <el-form-item label="houseID:" :span="2">
+              <el-input v-model="listQuery.houseId" :span="4"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="RoomID:">
+              <el-input v-model="listQuery.roomId"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="支付类型:">
+              <el-select v-model="listQuery.rentedStatus" placeholder="支付类型" clearable class="filter-item">
+                <el-option v-for="item in payTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="支付金额:">
+              <el-input v-model="listQuery.payAmount"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-form-item label="支付状态:">
+              <el-select v-model="listQuery.payStatus" placeholder="支付状态" clearable class="filter-item">
+                <el-option v-for="item in payStatusOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="预计付款时间:">
+              <el-date-picker v-model="listQuery.expectPayTime" style="width: 100%;" type="datetime" placeholder="请选择预计付款时间"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="实际付款时间:">
+              <el-date-picker v-model="listQuery.realPayTime" style="width: 100%;" type="datetime" placeholder="请选择实际付款时间"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="备注:">
+              <el-input v-model="listQuery.remarks"></el-input>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="20">
+          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+            Search
+          </el-button>
+          <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+            Add
+          </el-button>
+          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+            Export
+          </el-button>
+        </el-row>
+      </el-form>
     </div>
 
     <el-table
@@ -30,24 +75,49 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column label="BossID" prop="id"  align="center" width="80">
+      <el-table-column label="PayID" prop="id" align="center" width="80">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="姓名" width="150px" align="center">
+      <el-table-column label="RoomID" prop="id" align="center" width="80">
         <template slot-scope="{row}">
-          <span>{{ row.name }}</span>
+          <span>{{ row.roomId }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="手机号" min-width="150px" align="center">
+      <el-table-column label="HouseID" prop="id" align="center" width="80">
         <template slot-scope="{row}">
-          <span>{{ row.phoneNumber }}</span>
+          <span>{{ row.houseId }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="上任时间" width="110px" align="center">
+      <el-table-column label="支付类型" prop="id" align="center" width="200">
         <template slot-scope="{row}">
-          <span>{{ row.createTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.payTypeStr }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="预计付款时间" prop="id" align="center" width="80">
+        <template slot-scope="{row}">
+          <span>{{ row.expectPayTime }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="实际付款时间" prop="id" align="center" width="100">
+        <template slot-scope="{row}">
+          <span>{{ row.realPayTime }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="支付金额" prop="id" align="center" width="120">
+        <template slot-scope="{row}">
+          <span>{{ row.payAmount }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="支付状态" prop="id" align="center" width="100">
+        <template slot-scope="{row}">
+          <span>{{ row.payStatusStr }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="备注" prop="id" align="center" width="120">
+        <template slot-scope="{row}">
+          <span>{{ row.remarks }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
@@ -55,12 +125,6 @@
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
-          <!--          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
-                      Publish
-                    </el-button>-->
-          <!--          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
-                      Draft
-                    </el-button>-->
           <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
           </el-button>
@@ -68,18 +132,37 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList"/>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="姓名" prop="姓名">
-          <el-input v-model="temp.name" placeholder="请填写姓名"/>
+        <el-form-item label="房源ID" prop="房源ID">
+          <el-input v-model="temp.houseId" placeholder="请填写房源ID"/>
         </el-form-item>
-        <el-form-item label="手机号码" prop="手机号码">
-          <el-input v-model="temp.phoneNumber" placeholder="请填写手机号码"/>
+        <el-form-item label="房间ID" prop="房间ID">
+          <el-input v-model="temp.roomId" placeholder="请填写房间ID"/>
         </el-form-item>
-        <el-form-item label="上任时间" prop="上任时间">
-          <el-date-picker v-model="temp.createTime" type="datetime" placeholder="请选择上任时间" />
+        <el-form-item label="支付类型" prop="支付类型">
+          <el-select v-model="temp.payType" placeholder="请选择支付类型" clearable class="filter-item" style="width: 200px">
+            <el-option v-for="item in payTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="预计付款时间" prop="预计付款时间">
+          <el-date-picker v-model="temp.expectPayTime" type="datetime" placeholder="请选择预计付款时间"/>
+        </el-form-item>
+        <el-form-item label="实际付款时间" prop="实际付款时间">
+          <el-date-picker v-model="temp.realPayTime" type="datetime" placeholder="请选择实际付款时间"/>
+        </el-form-item>
+        <el-form-item label="支付金额" prop="支付金额">
+          <el-input v-model="temp.payAmount" placeholder="请填写支付金额"/>
+        </el-form-item>
+        <el-form-item label="支付状态" prop="支付状态">
+          <el-select v-model="temp.payStatus" placeholder="请选择支付状态" clearable class="filter-item" style="width: 200px">
+            <el-option v-for="item in payStatusOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="备注" prop="备注">
+          <el-input v-model="temp.remarks" placeholder="请填写备注"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -94,8 +177,8 @@
 
     <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
       <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel" />
-        <el-table-column prop="pv" label="Pv" />
+        <el-table-column prop="key" label="Channel"/>
+        <el-table-column prop="pv" label="Pv"/>
       </el-table>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
@@ -106,29 +189,30 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { fetchPv, createArticle, updateArticle } from '@/api/article'
-import { selectByPage, add, update} from '@/api/fangdichanhaixia/boss'
+import {fetchPv} from '@/api/article'
+import {selectByPage, add, update, deleteBatch} from '@/api/fangdichanhaixia/pay'
 import waves from '@/directive/waves' // waves directive
-import { parseTime } from '@/utils'
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import {parseTime} from '@/utils'
+import Pagination from '@/components/Pagination'
 
-const calendarTypeOptions = [
-  { key: 'CN', display_name: 'China' },
-  { key: 'US', display_name: 'USA' },
-  { key: 'JP', display_name: 'Japan' },
-  { key: 'EU', display_name: 'Eurozone' }
+const payTypeOptions = [
+  {key: 1, display_name: '支付房东房租'},
+  {key: 2, display_name: '收取租户房租'},
+  {key: 3, display_name: '收取租户押金'},
+  {key: 4, display_name: '退还租户押金'},
+  {key: 5, display_name: '房屋公共维修'},
+  {key: 6, display_name: '房屋水电燃气物业'}
+]
+const payStatusOptions = [
+  {key: 1, display_name: '未支付'},
+  {key: 2, display_name: '已支付'}
 ]
 
-// arr to obj, such as { CN : "China", US : "USA" }
-const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.display_name
-  return acc
-}, {})
 
 export default {
   name: 'ComplexTable',
-  components: { Pagination },
-  directives: { waves },
+  components: {Pagination},
+  directives: {waves},
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -138,8 +222,8 @@ export default {
       }
       return statusMap[status]
     },
-    typeFilter(type) {
-      return calendarTypeKeyValue[type]
+    payRentTypeFilter(type) {
+      return payRentTypeKeyValue[type]
     }
   },
   data() {
@@ -150,23 +234,34 @@ export default {
       listLoading: true,
       listQuery: {
         id: null,
-        name: null,
-        phoneNumber: null,
+        houseId: null,
+        roomId: null,
+        payType: null,
+        payTypeStr: null,
+        expectPayTime: null,
+        realPayTime: null,
+        payAmount: null,
+        payStatus: null,
+        remarks: null,
         pageNum: 1,
         pageSize: 20
       },
       importanceOptions: [1, 2, 3],
-      calendarTypeOptions,
+      payStatusOptions,
+      payTypeOptions,
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
       temp: {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
+        id: null,
+        houseId: null,
+        roomId: null,
+        payType: null,
+        payTypeStr: null,
+        expectPayTime: null,
+        realPayTime: null,
+        payAmount: null,
+        payStatus: null,
+        remarks: null
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -177,9 +272,9 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+        type: [{required: true, message: 'type is required', trigger: 'change'}],
+        timestamp: [{type: 'date', required: true, message: 'timestamp is required', trigger: 'change'}],
+        title: [{required: true, message: 'title is required', trigger: 'blur'}]
       },
       downloadLoading: false
     }
@@ -193,25 +288,12 @@ export default {
       selectByPage(this.listQuery).then(response => {
         this.list = response.content.data
         this.total = response.content.totalCount
-
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
         }, 1.5 * 1000)
       })
     },
-    /* getList() {
-      this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
-
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
-      })
-    },*/
     handleFilter() {
       this.listQuery.pageNum = 1
       console.log(this.listQuery)
@@ -251,8 +333,8 @@ export default {
           add(this.temp).then(response => {
             this.dialogFormVisible = false
             this.$notify({
-              title: '新增老板信息 成功',
-              message: '新增老板信息 成功',
+              title: '新增支付信息 成功',
+              message: '新增支付信息 成功',
               type: 'success',
               duration: 2000
             })
@@ -278,8 +360,8 @@ export default {
           update(this.temp).then(response => {
             this.dialogFormVisible = false
             this.$notify({
-              title: '修改老板信息 成功',
-              message: '修改老板信息 成功',
+              title: '修改支付信息 成功',
+              message: '修改支付信息 成功',
               type: 'success',
               duration: 2000
             })
@@ -288,14 +370,29 @@ export default {
         }
       })
     },
-    handleDelete(row, index) {
-      this.$notify({
-        title: 'Success',
-        message: 'Delete Successfully',
-        type: 'success',
-        duration: 2000
+    handleDelete(row) {
+      this.$confirm('此操作将删除该支付信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
-      this.list.splice(index, 1)
+        .then(async () => {
+          const ids = []
+          ids.push(row.id)
+          this.deleteData(ids)
+          this.handleFilter()
+        })
+    },
+    deleteData(ids) {
+      deleteBatch(ids).then(response => {
+        this.$notify({
+          title: '删除支付信息 成功',
+          message: '删除支付信息 成功',
+          type: 'success',
+          duration: 2000
+        })
+        this.handleFilter()
+      })
     },
     handleFetchPv(pv) {
       fetchPv(pv).then(response => {
@@ -306,8 +403,8 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+        const tHeader = ['HouseId', '支付地址', 'bossID', '房东名称', '房东电话号']
+        const filterVal = ['id', 'address', 'bossId', 'bossId', 'bossId']
         const data = this.formatJson(filterVal)
         excel.export_json_to_excel({
           header: tHeader,

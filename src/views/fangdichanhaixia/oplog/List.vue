@@ -1,21 +1,41 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-sl-panel style="border-left: 60px;width: 100px;text-align: right" class="filter-item">bossID:</el-sl-panel>
-      <el-input v-model="listQuery.id" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px;width: 100px;text-align: right" class="filter-item">姓名:</el-sl-panel>
-      <el-input v-model="listQuery.name" placeholder="姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px;width: 100px;text-align: right" class="filter-item">手机号码:</el-sl-panel>
-      <el-input v-model="listQuery.phoneNumber" placeholder="手机号码" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        Search
-      </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        Add
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        Export
-      </el-button>
+      <el-form ref="form" :model="form" label-width="100px">
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-form-item label="OpLogId:">
+              <el-input v-model="listQuery.id"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="操作类型:">
+              <el-select v-model="listQuery.type" placeholder="操作类型" clearable class="filter-item" style="width: 200px">
+                <el-option v-for="item in opTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="操作人:">
+              <el-input v-model="listQuery.creatorName"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="操作时间:">
+              <el-date-picker v-model="listQuery.createTime" type="datetime" placeholder="请选择合同开始日期"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+        <el-row :gutter="20">
+          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+            Search
+          </el-button>
+          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+            Export
+          </el-button>
+        </el-row>
+      </el-form>
+
     </div>
 
     <el-table
@@ -27,94 +47,66 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column label="BossID" prop="id" align="center" width="80">
+      <el-table-column label="OpLogID" prop="id" align="center">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="姓名" width="150px" align="center">
+      <el-table-column label="操作类型" width="120px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.name }}</span>
+          <span>{{ row.typeStr }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="手机号" min-width="150px" align="center">
+      <el-table-column label="操作人" min-width="100px" align="center">
         <template slot-scope="{row}">
-          <span>{{ row.phoneNumber }}</span>
+          <span>{{ row.creatorName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="上任时间" width="110px" align="center">
+      <el-table-column label="操作时间" width="200px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.createTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
-        <template slot-scope="{row,$index}">
-          <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            Edit
-          </el-button>
-          <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
-            Delete
-          </el-button>
+      <el-table-column label="操作前的旧值" min-width="150px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.contentOld }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作后的新值" min-width="150px" align="center">
+        <template slot-scope="{row}">
+          <span>{{ row.contentNew }}</span>
         </template>
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>-1" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList"/>
-
-    <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
-      <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="姓名" prop="姓名">
-          <el-input v-model="temp.name" placeholder="请填写姓名"/>
-        </el-form-item>
-        <el-form-item label="手机号码" prop="手机号码">
-          <el-input v-model="temp.phoneNumber" placeholder="请填写手机号码"/>
-        </el-form-item>
-        <el-form-item label="上任时间" prop="上任时间">
-          <el-date-picker v-model="temp.createTime" type="datetime" placeholder="请选择上任时间"/>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">
-          取消
-        </el-button>
-        <el-button type="primary" @click="dialogStatus==='create'?createData():updateData()">
-          保存
-        </el-button>
-      </div>
-    </el-dialog>
-
-    <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
-      <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel"/>
-        <el-table-column prop="pv" label="Pv"/>
-      </el-table>
-      <span slot="footer" class="dialog-footer">
-        <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
-      </span>
-    </el-dialog>
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList"/>
   </div>
 </template>
-
 <script>
 // eslint-disable-next-line no-unused-vars
 import {fetchPv, createArticle, updateArticle} from '@/api/article'
-import {selectByPage, add, update, deleteBatch} from '@/api/fangdichanhaixia/boss'
+import {selectByPage} from '@/api/fangdichanhaixia/oplog'
 import waves from '@/directive/waves' // waves directive
 import {parseTime} from '@/utils'
 import Pagination from '@/components/Pagination'
 
-const calendarTypeOptions = [
-  {key: 'CN', display_name: 'China'},
-  {key: 'US', display_name: 'USA'},
-  {key: 'JP', display_name: 'Japan'},
-  {key: 'EU', display_name: 'Eurozone'}
+const opTypeOptions = [
+  {key: 1, display_name: '新增老板信息'},
+  {key: 2, display_name: '修改老板信息'},
+  {key: 3, display_name: '删除老板信息'},
+  {key: 4, display_name: '新增房源信息'},
+  {key: 5, display_name: '修改房源信息'},
+  {key: 6, display_name: '删除房源信息'},
+  {key: 7, display_name: '新增房间信息'},
+  {key: 8, display_name: '修改房间信息'},
+  {key: 9, display_name: '删除房间信息'},
+  {key: 10, display_name: '新增支付信息'},
+  {key: 11, display_name: '修改支付信息'},
+  {key: 11, display_name: '删除支付信息'},
+  {key: 11, display_name: '登录系统'},
+  {key: 12, display_name: '退出系统'}
 ]
 
-// arr to obj, such as { CN : "China", US : "USA" }
-const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.display_name
-  return acc
-}, {})
 
 export default {
   name: 'ComplexTable',
@@ -128,9 +120,6 @@ export default {
         deleted: 'danger'
       }
       return statusMap[status]
-    },
-    typeFilter(type) {
-      return calendarTypeKeyValue[type]
     }
   },
   data() {
@@ -141,24 +130,25 @@ export default {
       listLoading: true,
       listQuery: {
         id: null,
-        name: null,
-        phoneNumber: null,
+        type: null,
+        typeStr: null,
+        creatorName: null,
+        contentOld: null,
+        contentNew: null,
         pageNum: 1,
         pageSize: 20
       },
-      importanceOptions: [1, 2, 3],
-      calendarTypeOptions,
-      statusOptions: ['published', 'draft', 'deleted'],
+      opTypeOptions,
       showReviewer: false,
       temp: {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
+        id: null,
+        type: null,
+        typeStr: null,
+        creatorName: null,
+        contentOld: null,
+        contentNew: null
       },
+      importanceOptions: [1, 2, 3],
       dialogFormVisible: false,
       dialogStatus: '',
       textMap: {
@@ -230,8 +220,8 @@ export default {
           add(this.temp).then(response => {
             this.dialogFormVisible = false
             this.$notify({
-              title: '新增老板信息 成功',
-              message: '新增老板信息 成功',
+              title: '新增操作日志信息 成功',
+              message: '新增操作日志信息 成功',
               type: 'success',
               duration: 2000
             })
@@ -257,8 +247,8 @@ export default {
           update(this.temp).then(response => {
             this.dialogFormVisible = false
             this.$notify({
-              title: '修改老板信息 成功',
-              message: '修改老板信息 成功',
+              title: '修改操作日志信息 成功',
+              message: '修改操作日志信息 成功',
               type: 'success',
               duration: 2000
             })
@@ -268,7 +258,7 @@ export default {
       })
     },
     handleDelete(row) {
-      this.$confirm('此操作将删除该老板信息, 是否继续?', '提示', {
+      this.$confirm('此操作将删除该操作日志信息, 是否继续?', '提示', {
         confirmButtonText: '确定',
         cancelButtonText: '取消',
         type: 'warning'
@@ -283,8 +273,8 @@ export default {
     deleteData(ids) {
       deleteBatch(ids).then(response => {
         this.$notify({
-          title: '删除老板信息 成功',
-          message: '删除老板信息 成功',
+          title: '删除操作日志信息 成功',
+          message: '删除操作日志信息 成功',
           type: 'success',
           duration: 2000
         })
