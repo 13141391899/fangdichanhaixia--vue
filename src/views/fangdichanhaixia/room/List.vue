@@ -102,7 +102,7 @@
       </el-table-column>
       <el-table-column label="租住状态" prop="id" align="center" width="80">
         <template slot-scope="{row}">
-          <span>{{ row.rentedStatus }}</span>
+          <span>{{ row.rentedStatusStr }}</span>
         </template>
       </el-table-column>
       <el-table-column label="租房人名称" prop="id" align="center" width="100">
@@ -117,7 +117,7 @@
       </el-table-column>
       <el-table-column label="付款类型" prop="id" align="center" width="100">
         <template slot-scope="{row}">
-          <span>{{ row.payorType }}</span>
+          <span>{{ row.payorTypeStr }}</span>
         </template>
       </el-table-column>
       <el-table-column label="合同编号" prop="id" align="center" width="120">
