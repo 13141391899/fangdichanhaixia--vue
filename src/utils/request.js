@@ -82,4 +82,10 @@ service.interceptors.response.use(
   }
 )
 
-export default service
+const local_host = "112.126.79.228/";
+const local_port = "7001";
+const local_host_port = local_host+local_port;
+export default {
+  service,
+  local_host_port
+}
