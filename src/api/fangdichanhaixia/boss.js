@@ -1,7 +1,6 @@
 import request from '@/utils/request'
 
-//var host = 'http://localhost:'
-var host = 'http://112.126.79.228:'
+var host = 'http://localhost:'
 var port = 7001
 
 export function selectByPage(data) {

@@ -52,12 +52,6 @@
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
-          <!--          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
-                      Publish
-                    </el-button>-->
-          <!--          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
-                      Draft
-                    </el-button>-->
           <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
           </el-button>
@@ -104,11 +98,10 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import {fetchPv, createArticle, updateArticle} from '@/api/article'
-import {selectByPage, add, update} from '@/api/fangdichanhaixia/boss'
+import {selectByPage, add, update, deleteBatch} from '@/api/fangdichanhaixia/boss'
 import waves from '@/directive/waves' // waves directive
 import {parseTime} from '@/utils'
 import Pagination from '@/components/Pagination'
-import {deleteBatch} from "@/api/fangdichanhaixia/house"; // secondary package based on el-pagination
 
 const calendarTypeOptions = [
   {key: 'CN', display_name: 'China'},

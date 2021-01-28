@@ -1,24 +1,79 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-sl-panel style="border-left: 60px" class="filter-item">bossID:</el-sl-panel>
-      <el-input v-model="listQuery.id" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-sl-panel style="border-left: 60px" class="filter-item">姓名:</el-sl-panel>
-      <el-input v-model="listQuery.name" placeholder="姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-sl-panel style="border-left: 60px" class="filter-item">手机号码:</el-sl-panel>
-      <el-input v-model="listQuery.phoneNumber" placeholder="手机号码" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter" />
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        Search
-      </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        Add
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        Export
-      </el-button>
-      <el-checkbox v-model="showReviewer" class="filter-item" style="margin-left:15px;" @change="tableKey=tableKey+1">
-        reviewer
-      </el-checkbox>
+      <el-form ref="form" :model="form" label-width="100px">
+        <el-row :gutter="24">
+          <el-col :span="6">
+            <el-form-item label="RoomID:">
+              <el-input v-model="listQuery.id"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="houseID:" :span="2">
+              <el-input v-model="listQuery.houseId" :span="4"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="房间名称:">
+              <el-input v-model="listQuery.name"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="房间租住状态:">
+              <el-select v-model="listQuery.rentedStatus" placeholder="房间租住状态" clearable class="filter-item">
+                <el-option v-for="item in rentedStatusOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-form-item label="租房人名称:">
+              <el-input v-model="listQuery.rentPeopleName"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="租房人电话:">
+              <el-input v-model="listQuery.rentPeoplePhoneNumber"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="付款类型:">
+              <el-select v-model="listQuery.payorType" placeholder="租住类型" clearable class="filter-item">
+                <el-option v-for="item in payRentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
+              </el-select>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="租住开始时间:">
+              <el-date-picker v-model="listQuery.contractStartTime" style="width: 100%;" type="datetime" placeholder="请选择合同结束日期"/>
+            </el-form-item>
+          </el-col>
+        </el-row>
+
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-form-item label="租住结束时间:">
+              <el-date-picker v-model="listQuery.contractEndTime" style="width: 100%;" type="datetime" placeholder="请选择合同结束日期"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="合同编号:">
+              <el-input v-model="listQuery.contractCode"></el-input>
+            </el-form-item>
+          </el-col>
+          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+            Search
+          </el-button>
+          <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+            Add
+          </el-button>
+          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+            Export
+          </el-button>
+        </el-row>
+      </el-form>
     </div>
 
     <el-table
@@ -30,24 +85,64 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column label="BossID" prop="id"  align="center" width="80">
+      <el-table-column label="RoomID" prop="id" align="center" width="80">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="姓名" width="150px" align="center">
+      <el-table-column label="HouseID" prop="id" align="center" width="80">
         <template slot-scope="{row}">
-          <span>{{ row.name }}</span>
+          <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="手机号" min-width="150px" align="center">
+      <el-table-column label="房间名称" prop="id" align="center" width="200">
         <template slot-scope="{row}">
-          <span>{{ row.phoneNumber }}</span>
+          <span>{{ row.address }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="上任时间" width="110px" align="center">
+      <el-table-column label="房间租住状态" prop="id" align="center" width="80">
         <template slot-scope="{row}">
-          <span>{{ row.createTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
+          <span>{{ row.bossId }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="租房人名称" prop="id" align="center" width="80">
+        <template slot-scope="{row}">
+          <span>{{ row.ownerName }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="租房人电话" prop="id" align="center" width="120">
+        <template slot-scope="{row}">
+          <span>{{ row.ownerPhoneNumber }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="付款类型" prop="id" align="center" width="100">
+        <template slot-scope="{row}">
+          <span>{{ row.payeeName }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="合同编号" prop="id" align="center" width="120">
+        <template slot-scope="{row}">
+          <span>{{ row.ownerPhoneNumber }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="租住开始时间" prop="id" align="center" width="120">
+        <template slot-scope="{row}">
+          <span>{{ row.payeePhoneNumber }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="合同开始日期" prop="id" align="center" width="120">
+        <template slot-scope="{row}">
+          <span>{{ row.contractStartTime }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="合同结束日期" prop="id" align="center" width="120">
+        <template slot-scope="{row}">
+          <span>{{ row.contractEndTime }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="租住结束时间" prop="id" align="center" width="120">
+        <template slot-scope="{row}">
+          <span>{{ row.contractCode }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
@@ -55,12 +150,6 @@
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
           </el-button>
-          <!--          <el-button v-if="row.status!='published'" size="mini" type="success" @click="handleModifyStatus(row,'published')">
-                      Publish
-                    </el-button>-->
-          <!--          <el-button v-if="row.status!='draft'" size="mini" @click="handleModifyStatus(row,'draft')">
-                      Draft
-                    </el-button>-->
           <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
             Delete
           </el-button>
@@ -68,18 +157,43 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList"/>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
-        <el-form-item label="姓名" prop="姓名">
-          <el-input v-model="temp.name" placeholder="请填写姓名"/>
+        <el-form-item label="对应的房间ID" prop="对应的房间ID">
+          <el-input v-model="temp.houseId" placeholder="请填写房间地址"/>
         </el-form-item>
-        <el-form-item label="手机号码" prop="手机号码">
-          <el-input v-model="temp.phoneNumber" placeholder="请填写手机号码"/>
+        <el-form-item label="房间名称" prop="房间名称">
+          <el-input v-model="temp.name" placeholder="请填写BossId"/>
         </el-form-item>
-        <el-form-item label="上任时间" prop="上任时间">
-          <el-date-picker v-model="temp.createTime" type="datetime" placeholder="请选择上任时间" />
+        <el-form-item label="房间租住状态" prop="房间租住状态">
+          <el-select v-model="temp.rentedStatus" placeholder="房间租住状态" clearable class="filter-item" style="width: 200px">
+            <el-option v-for="item in rentedStatusOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="租房人名称" prop="租房人名称">
+          <el-input v-model="temp.rentPeopleName" placeholder="请填写房东电话号"/>
+        </el-form-item>
+        <el-form-item label="租房人电话" prop="租房人电话">
+          <el-input v-model="temp.payeeName" placeholder="请填写收款人名称"/>
+        </el-form-item>
+        <el-form-item label="收款人手机号" prop="收款人手机号">
+          <el-input v-model="temp.rentPeoplePhoneNumber" placeholder="请填写收款人手机号"/>
+        </el-form-item>
+        <el-form-item label="付款类型" prop="付款类型">
+          <el-select v-model="temp.payorType" placeholder="租住类型" clearable class="filter-item" style="width: 200px">
+            <el-option v-for="item in payRentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="租住开始时间" prop="租住开始时间">
+          <el-date-picker v-model="temp.contractStartTime" type="datetime" placeholder="请选择合同结束日期"/>
+        </el-form-item>
+        <el-form-item label="租住结束时间" prop="租住结束时间">
+          <el-input v-model="temp.contractEndTime" placeholder="请填写合同编号"/>
+        </el-form-item>
+        <el-form-item label="合同编号" prop="合同编号">
+          <el-input v-model="temp.contractCode" placeholder="请填写收款人手机号"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -94,8 +208,8 @@
 
     <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
       <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel" />
-        <el-table-column prop="pv" label="Pv" />
+        <el-table-column prop="key" label="Channel"/>
+        <el-table-column prop="pv" label="Pv"/>
       </el-table>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
@@ -106,29 +220,29 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { fetchPv, createArticle, updateArticle } from '@/api/article'
-import { selectByPage, add, update} from '@/api/fangdichanhaixia/boss'
+import {fetchPv} from '@/api/article'
+import {selectByPage, add, update, deleteBatch} from '@/api/fangdichanhaixia/room'
 import waves from '@/directive/waves' // waves directive
-import { parseTime } from '@/utils'
-import Pagination from '@/components/Pagination' // secondary package based on el-pagination
+import {parseTime} from '@/utils'
+import Pagination from '@/components/Pagination'
+import {deleteRole} from "@/api/role"; // secondary package based on el-pagination
 
-const calendarTypeOptions = [
-  { key: 'CN', display_name: 'China' },
-  { key: 'US', display_name: 'USA' },
-  { key: 'JP', display_name: 'Japan' },
-  { key: 'EU', display_name: 'Eurozone' }
+const payRentTypeOptions = [
+  {key: 1, display_name: '年付'},
+  {key: 2, display_name: '半年付'},
+  {key: 3, display_name: '押一付三'},
+  {key: 4, display_name: '押一付一'}
+]
+const rentedStatusOptions = [
+  {key: 1, display_name: '待出租'},
+  {key: 2, display_name: '已出租'}
 ]
 
-// arr to obj, such as { CN : "China", US : "USA" }
-const calendarTypeKeyValue = calendarTypeOptions.reduce((acc, cur) => {
-  acc[cur.key] = cur.display_name
-  return acc
-}, {})
 
 export default {
   name: 'ComplexTable',
-  components: { Pagination },
-  directives: { waves },
+  components: {Pagination},
+  directives: {waves},
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -138,8 +252,8 @@ export default {
       }
       return statusMap[status]
     },
-    typeFilter(type) {
-      return calendarTypeKeyValue[type]
+    payRentTypeFilter(type) {
+      return payRentTypeKeyValue[type]
     }
   },
   data() {
@@ -150,23 +264,34 @@ export default {
       listLoading: true,
       listQuery: {
         id: null,
+        houseId: null,
         name: null,
-        phoneNumber: null,
+        rentedStatus: null,
+        rentPeopleName: null,
+        rentPeoplePhoneNumber: null,
+        payorType: null,
+        contractStartTime: null,
+        contractEndTime: null,
+        contractCode: null,
         pageNum: 1,
         pageSize: 20
       },
       importanceOptions: [1, 2, 3],
-      calendarTypeOptions,
+      rentedStatusOptions,
+      payRentTypeOptions,
       statusOptions: ['published', 'draft', 'deleted'],
       showReviewer: false,
       temp: {
-        id: undefined,
-        importance: 1,
-        remark: '',
-        timestamp: new Date(),
-        title: '',
-        type: '',
-        status: 'published'
+        id: null,
+        houseId: null,
+        name: null,
+        rentedStatus: null,
+        rentPeopleName: null,
+        rentPeoplePhoneNumber: null,
+        payorType: null,
+        contractStartTime: null,
+        contractEndTime: null,
+        contractCode: null
       },
       dialogFormVisible: false,
       dialogStatus: '',
@@ -177,9 +302,9 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+        type: [{required: true, message: 'type is required', trigger: 'change'}],
+        timestamp: [{type: 'date', required: true, message: 'timestamp is required', trigger: 'change'}],
+        title: [{required: true, message: 'title is required', trigger: 'blur'}]
       },
       downloadLoading: false
     }
@@ -193,25 +318,12 @@ export default {
       selectByPage(this.listQuery).then(response => {
         this.list = response.content.data
         this.total = response.content.totalCount
-
         // Just to simulate the time of the request
         setTimeout(() => {
           this.listLoading = false
         }, 1.5 * 1000)
       })
     },
-    /* getList() {
-      this.listLoading = true
-      fetchList(this.listQuery).then(response => {
-        this.list = response.data.items
-        this.total = response.data.total
-
-        // Just to simulate the time of the request
-        setTimeout(() => {
-          this.listLoading = false
-        }, 1.5 * 1000)
-      })
-    },*/
     handleFilter() {
       this.listQuery.pageNum = 1
       console.log(this.listQuery)
@@ -251,8 +363,8 @@ export default {
           add(this.temp).then(response => {
             this.dialogFormVisible = false
             this.$notify({
-              title: '新增老板信息 成功',
-              message: '新增老板信息 成功',
+              title: '新增房间信息 成功',
+              message: '新增房间信息 成功',
               type: 'success',
               duration: 2000
             })
@@ -278,8 +390,8 @@ export default {
           update(this.temp).then(response => {
             this.dialogFormVisible = false
             this.$notify({
-              title: '修改老板信息 成功',
-              message: '修改老板信息 成功',
+              title: '修改房间信息 成功',
+              message: '修改房间信息 成功',
               type: 'success',
               duration: 2000
             })
@@ -288,14 +400,29 @@ export default {
         }
       })
     },
-    handleDelete(row, index) {
-      this.$notify({
-        title: 'Success',
-        message: 'Delete Successfully',
-        type: 'success',
-        duration: 2000
+    handleDelete(row) {
+      this.$confirm('此操作将删除该房间信息, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
       })
-      this.list.splice(index, 1)
+        .then(async () => {
+          const ids = []
+          ids.push(row.id)
+          this.deleteData(ids)
+          this.handleFilter()
+        })
+    },
+    deleteData(ids) {
+      deleteBatch(ids).then(response => {
+        this.$notify({
+          title: '删除房间信息 成功',
+          message: '删除房间信息 成功',
+          type: 'success',
+          duration: 2000
+        })
+        this.handleFilter()
+      })
     },
     handleFetchPv(pv) {
       fetchPv(pv).then(response => {
@@ -306,8 +433,8 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+        const tHeader = ['HouseId', '房间地址', 'bossID', '房东名称', '房东电话号']
+        const filterVal = ['id', 'address', 'bossId', 'bossId', 'bossId']
         const data = this.formatJson(filterVal)
         excel.export_json_to_excel({
           header: tHeader,

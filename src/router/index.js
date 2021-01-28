@@ -82,6 +82,20 @@ export const constantRoutes = [
       }
     ]
   },
+
+  {
+    path: '/',
+    component: Layout,
+    redirect: '/roomList',
+    children: [
+      {
+        path: 'roomList',
+        component: () => import('@/views/fangdichanhaixia/room/List'),
+        name: '房间信息列表',
+        meta: { title: '房间信息列表', icon: 'dashboard', affix: true }
+      }
+    ]
+  },
   tableRouter
 ]
 
