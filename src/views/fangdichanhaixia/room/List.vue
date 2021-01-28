@@ -46,7 +46,7 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="租住开始时间:">
+            <el-form-item label="合同开始时间:">
               <el-date-picker v-model="listQuery.contractStartTime" style="width: 100%;" type="datetime" placeholder="请选择合同结束日期"/>
             </el-form-item>
           </el-col>
@@ -54,7 +54,7 @@
 
         <el-row :gutter="20">
           <el-col :span="6">
-            <el-form-item label="租住结束时间:">
+            <el-form-item label="合同结束时间:">
               <el-date-picker v-model="listQuery.contractEndTime" style="width: 100%;" type="datetime" placeholder="请选择合同结束日期"/>
             </el-form-item>
           </el-col>
@@ -92,42 +92,37 @@
       </el-table-column>
       <el-table-column label="HouseID" prop="id" align="center" width="80">
         <template slot-scope="{row}">
-          <span>{{ row.id }}</span>
+          <span>{{ row.houseId }}</span>
         </template>
       </el-table-column>
       <el-table-column label="房间名称" prop="id" align="center" width="200">
         <template slot-scope="{row}">
-          <span>{{ row.address }}</span>
+          <span>{{ row.name }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="房间租住状态" prop="id" align="center" width="80">
+      <el-table-column label="租住状态" prop="id" align="center" width="80">
         <template slot-scope="{row}">
-          <span>{{ row.bossId }}</span>
+          <span>{{ row.rentedStatus }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="租房人名称" prop="id" align="center" width="80">
+      <el-table-column label="租房人名称" prop="id" align="center" width="100">
         <template slot-scope="{row}">
-          <span>{{ row.ownerName }}</span>
+          <span>{{ row.rentPeopleName }}</span>
         </template>
       </el-table-column>
       <el-table-column label="租房人电话" prop="id" align="center" width="120">
         <template slot-scope="{row}">
-          <span>{{ row.ownerPhoneNumber }}</span>
+          <span>{{ row.rentPeoplePhoneNumber }}</span>
         </template>
       </el-table-column>
       <el-table-column label="付款类型" prop="id" align="center" width="100">
         <template slot-scope="{row}">
-          <span>{{ row.payeeName }}</span>
+          <span>{{ row.payorType }}</span>
         </template>
       </el-table-column>
       <el-table-column label="合同编号" prop="id" align="center" width="120">
         <template slot-scope="{row}">
-          <span>{{ row.ownerPhoneNumber }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="租住开始时间" prop="id" align="center" width="120">
-        <template slot-scope="{row}">
-          <span>{{ row.payeePhoneNumber }}</span>
+          <span>{{ row.contractCode }}</span>
         </template>
       </el-table-column>
       <el-table-column label="合同开始日期" prop="id" align="center" width="120">
@@ -138,11 +133,6 @@
       <el-table-column label="合同结束日期" prop="id" align="center" width="120">
         <template slot-scope="{row}">
           <span>{{ row.contractEndTime }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="租住结束时间" prop="id" align="center" width="120">
-        <template slot-scope="{row}">
-          <span>{{ row.contractCode }}</span>
         </template>
       </el-table-column>
       <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
@@ -186,10 +176,10 @@
             <el-option v-for="item in payRentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
           </el-select>
         </el-form-item>
-        <el-form-item label="租住开始时间" prop="租住开始时间">
+        <el-form-item label="合同开始时间" prop="合同开始时间">
           <el-date-picker v-model="temp.contractStartTime" type="datetime" placeholder="请选择合同结束日期"/>
         </el-form-item>
-        <el-form-item label="租住结束时间" prop="租住结束时间">
+        <el-form-item label="合同结束时间" prop="合同结束时间">
           <el-input v-model="temp.contractEndTime" placeholder="请填写合同编号"/>
         </el-form-item>
         <el-form-item label="合同编号" prop="合同编号">
