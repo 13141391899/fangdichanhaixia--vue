@@ -5,22 +5,22 @@
         <el-row :gutter="24">
           <el-col :span="6">
             <el-form-item label="houseID:" :span="2">
-              <el-input v-model="listQuery.id" :span="4" />
+              <el-input v-model="listQuery.id" :span="4"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="bossID:">
-              <el-input v-model="listQuery.bossId" />
+              <el-input v-model="listQuery.bossId"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="房源地址:">
-              <el-input v-model="listQuery.address" />
+              <el-input v-model="listQuery.address"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="房东名称:">
-              <el-input v-model="listQuery.ownerName" />
+              <el-input v-model="listQuery.ownerName"/>
             </el-form-item>
           </el-col>
         </el-row>
@@ -28,57 +28,58 @@
         <el-row :gutter="20">
           <el-col :span="6">
             <el-form-item label="房东电话号:">
-              <el-input v-model="listQuery.ownerPhoneNumber" />
+              <el-input v-model="listQuery.ownerPhoneNumber"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="收款人名称:">
-              <el-input v-model="listQuery.payeeName" />
+              <el-input v-model="listQuery.payeeName"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="收款人手机号:">
-              <el-input v-model="listQuery.payeePhoneNumber" />
+              <el-input v-model="listQuery.payeePhoneNumber"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="租住类型:">
               <el-select v-model="listQuery.rentType" placeholder="租住类型" clearable class="filter-item" style="width: 200px">
-                <el-option v-for="item in rentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+                <el-option v-for="item in rentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
               </el-select>
             </el-form-item>
           </el-col>
 
           <el-col :span="6">
             <el-form-item label="合同编号:">
-              <el-input v-model="listQuery.contractCode" />
+              <el-input v-model="listQuery.contractCode"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="付款类型:">
               <el-select v-model="listQuery.payorType" placeholder="付款类型" clearable class="filter-item" style="width: 200px">
-                <el-option v-for="item in payRentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+                <el-option v-for="item in payRentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
               </el-select>
             </el-form-item>
           </el-col>
 
           <el-col :span="6">
             <el-form-item label="收款账号:">
-              <el-input v-model="listQuery.payeeAccount" />
+              <el-input v-model="listQuery.payeeAccount"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="合同开始时间:">
-              <el-date-picker v-model="temp.contractStartTime" type="datetime" placeholder="请选择合同开始日期" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="6">
-            <el-form-item label="合同结束时间:">
-              <el-date-picker v-model="temp.contractEndTime" type="datetime" placeholder="请选择合同开始日期" />
+              <el-date-picker v-model="temp.contractStartTime" type="datetime" placeholder="请选择合同开始日期"/>
             </el-form-item>
           </el-col>
         </el-row>
-      </el-form>
+
+        <el-row :gutter="20">
+          <el-col :span="6">
+            <el-form-item label="合同结束时间:">
+              <el-date-picker v-model="temp.contractEndTime" type="datetime" placeholder="请选择合同开始日期"/>
+            </el-form-item>
+          </el-col>
       <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
         Search
       </el-button>
@@ -88,6 +89,9 @@
       <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
         Export
       </el-button>
+      </el-row>
+      </el-form>
+
     </div>
 
     <el-table
@@ -176,49 +180,49 @@
       </el-table-column>
     </el-table>
 
-    <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList" />
+    <pagination v-show="total>0" :total="total" :page.sync="listQuery.pageNum" :limit.sync="listQuery.pageSize" @pagination="getList"/>
 
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
         <el-form-item label="房源地址" prop="房源地址">
-          <el-input v-model="temp.address" placeholder="请填写房源地址" />
+          <el-input v-model="temp.address" placeholder="请填写房源地址"/>
         </el-form-item>
         <el-form-item label="BossId" prop="BossId">
-          <el-input v-model="temp.bossId" placeholder="请填写BossId" />
+          <el-input v-model="temp.bossId" placeholder="请填写BossId"/>
         </el-form-item>
         <el-form-item label="房东名称" prop="房东名称">
-          <el-input v-model="temp.ownerName" placeholder="请填写房东名称" />
+          <el-input v-model="temp.ownerName" placeholder="请填写房东名称"/>
         </el-form-item>
         <el-form-item label="房东电话号" prop="房东电话号">
-          <el-input v-model="temp.ownerPhoneNumber" placeholder="请填写房东电话号" />
+          <el-input v-model="temp.ownerPhoneNumber" placeholder="请填写房东电话号"/>
         </el-form-item>
         <el-form-item label="收款人名称" prop="收款人名称">
-          <el-input v-model="temp.payeeName" placeholder="请填写收款人名称" />
+          <el-input v-model="temp.payeeName" placeholder="请填写收款人名称"/>
         </el-form-item>
         <el-form-item label="收款人手机号" prop="收款人手机号">
-          <el-input v-model="temp.payeePhoneNumber" placeholder="请填写收款人手机号" />
+          <el-input v-model="temp.payeePhoneNumber" placeholder="请填写收款人手机号"/>
         </el-form-item>
         <el-form-item label="合同开始日期" prop="合同开始日期">
-          <el-date-picker v-model="temp.contractStartTime" type="datetime" placeholder="请选择合同开始日期" />
+          <el-date-picker v-model="temp.contractStartTime" type="datetime" placeholder="请选择合同开始日期"/>
         </el-form-item>
         <el-form-item label="合同结束日期" prop="合同结束日期">
-          <el-date-picker v-model="temp.contractEndTime" type="datetime" placeholder="请选择合同结束日期" />
+          <el-date-picker v-model="temp.contractEndTime" type="datetime" placeholder="请选择合同结束日期"/>
         </el-form-item>
         <el-form-item label="合同编号" prop="合同编号">
-          <el-input v-model="temp.contractCode" placeholder="请填写合同编号" />
+          <el-input v-model="temp.contractCode" placeholder="请填写合同编号"/>
         </el-form-item>
         <el-form-item label="租住类型" prop="租住类型">
           <el-select v-model="temp.rentedType" placeholder="请选择租住类型" clearable class="filter-item" style="width: 130px">
-            <el-option v-for="item in rentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key" />
+            <el-option v-for="item in rentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
           </el-select>
         </el-form-item>
         <el-form-item label="付款类型" prop="付款类型">
           <el-select v-model="temp.payorType" placeholder="请选择付款类型" clearable class="filter-item" style="width: 130px">
-            <el-option v-for="item in payRentTypeOptions" :label="item.display_name" :value="item.key" />
+            <el-option v-for="item in payRentTypeOptions" :label="item.display_name" :value="item.key"/>
           </el-select>
         </el-form-item>
         <el-form-item label="收款账号" prop="收款账号">
-          <el-input v-model="temp.payeeAccount" placeholder="请填收款账号" />
+          <el-input v-model="temp.payeeAccount" placeholder="请填收款账号"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -233,8 +237,8 @@
 
     <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
       <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel" />
-        <el-table-column prop="pv" label="Pv" />
+        <el-table-column prop="key" label="Channel"/>
+        <el-table-column prop="pv" label="Pv"/>
       </el-table>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
@@ -245,21 +249,21 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { fetchPv } from '@/api/article'
-import { selectByPage, add, update, deleteBatch } from '@/api/fangdichanhaixia/house'
+import {fetchPv} from '@/api/article'
+import {selectByPage, add, update, deleteBatch} from '@/api/fangdichanhaixia/house'
 import waves from '@/directive/waves' // waves directive
-import { parseTime } from '@/utils'
+import {parseTime} from '@/utils'
 import Pagination from '@/components/Pagination'
 
 const payRentTypeOptions = [
-  { key: 1, display_name: '年付' },
-  { key: 2, display_name: '半年付' },
-  { key: 3, display_name: '押一付三' },
-  { key: 4, display_name: '押一付一' }
+  {key: 1, display_name: '年付'},
+  {key: 2, display_name: '半年付'},
+  {key: 3, display_name: '押一付三'},
+  {key: 4, display_name: '押一付一'}
 ]
 const rentTypeOptions = [
-  { key: 1, display_name: '整租' },
-  { key: 2, display_name: '合租' }
+  {key: 1, display_name: '整租'},
+  {key: 2, display_name: '合租'}
 ]
 
 // arr to obj, such as { CN : "China", US : "USA" }
@@ -270,8 +274,8 @@ const payRentTypeKeyValue = payRentTypeOptions.reduce((acc, cur) => {
 
 export default {
   name: 'ComplexTable',
-  components: { Pagination },
-  directives: { waves },
+  components: {Pagination},
+  directives: {waves},
   filters: {
     statusFilter(status) {
       const statusMap = {
@@ -337,9 +341,9 @@ export default {
       dialogPvVisible: false,
       pvData: [],
       rules: {
-        type: [{ required: true, message: 'type is required', trigger: 'change' }],
-        timestamp: [{ type: 'date', required: true, message: 'timestamp is required', trigger: 'change' }],
-        title: [{ required: true, message: 'title is required', trigger: 'blur' }]
+        type: [{required: true, message: 'type is required', trigger: 'change'}],
+        timestamp: [{type: 'date', required: true, message: 'timestamp is required', trigger: 'change'}],
+        title: [{required: true, message: 'title is required', trigger: 'blur'}]
       },
       downloadLoading: false
     }
@@ -441,7 +445,7 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       })
-        .then(async() => {
+        .then(async () => {
           const ids = []
           ids.push(row.id)
           this.deleteData(ids)
