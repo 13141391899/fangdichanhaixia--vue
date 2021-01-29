@@ -123,10 +123,10 @@ export const constantRoutes = [
         meta: { title: '操作日志列表', icon: 'dashboard', affix: true }
       }
     ]
-  },
+  }
 
 
-  tableRouter
+  //tableRouter
 ]
 
 /**
