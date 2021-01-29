@@ -49,16 +49,17 @@
 
       <div style="position:relative">
         <div class="tips">
-          <span>Username : admin</span>
-          <span>Password : any</span>
+          <span>账号 : 内部账号请向开发者索要</span>
+<!--          <span>密码 : 请向开发者索要</span>-->
         </div>
         <div class="tips">
-          <span style="margin-right:18px;">Username : editor</span>
-          <span>Password : any</span>
+          <span>密码 : 内部账号请向开发者索要</span>
+<!--          <span style="margin-right:18px;">Username : editor</span>
+          <span>Password : any</span>-->
         </div>
 
         <el-button class="thirdparty-button" type="primary" @click="showDialog=true">
-          Or connect with
+          其他账户当录
         </el-button>
       </div>
     </el-form>

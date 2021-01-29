@@ -1,12 +1,11 @@
 import request from '@/utils/request'
+import base from "@/api/fangdichanhaixia/base";
 
-var host = 'http://localhost:'
-var port = 7001
 
 export function selectByPage(data) {
   var path = '/fangdichanhaixia/opLogInfo/selectByPage'
   return request({
-    url: host + port + path,
+    url: base.baseUrl + path,
     method: 'post',
     data
   })

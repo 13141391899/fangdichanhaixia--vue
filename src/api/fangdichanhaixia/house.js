@@ -1,10 +1,10 @@
 import request from '@/utils/request'
-var host = 'http://localhost:'
-var port = 7001
+import base from "@/api/fangdichanhaixia/base";
+
 export function selectByPage(data) {
   var path = '/fangdichanhaixia/houseInfo/selectByPage'
   return request({
-    url: host + port +  path,
+    url: base.baseUrl +  path,
     method: 'post',
     data
   })
@@ -13,7 +13,7 @@ export function selectByPage(data) {
 export function add(data) {
   var path = '/fangdichanhaixia/houseInfo/add'
   return request({
-    url: host + port +  path,
+    url: base.baseUrl +  path,
     method: 'post',
     data
   })
@@ -22,7 +22,7 @@ export function add(data) {
 export function update(data) {
   var path = '/fangdichanhaixia/houseInfo/update'
   return request({
-    url: host + port +  path,
+    url: base.baseUrl +  path,
     method: 'post',
     data
   })
@@ -31,7 +31,7 @@ export function update(data) {
 export function deleteBatch(data) {
   var path = '/fangdichanhaixia/houseInfo/deleteBatch'
   return request({
-    url: host + port +  path,
+    url: base.baseUrl +  path,
     method: 'post',
     data
   })
