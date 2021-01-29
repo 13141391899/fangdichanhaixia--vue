@@ -47,32 +47,32 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column label="OpLogID" prop="id" align="center">
+      <el-table-column show-tooltip-when-overflow label="OpLogID" width="100px" align="center" >
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作类型" width="120px" align="center">
+      <el-table-column show-tooltip-when-overflow label="操作类型" width="120px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.typeStr }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作人" min-width="100px" align="center">
+      <el-table-column show-tooltip-when-overflow label="操作人" width="100px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.creatorName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作时间" width="200px" align="center">
+      <el-table-column show-tooltip-when-overflow label="操作时间" width="200px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.createTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作前的旧值" min-width="150px" align="center">
+      <el-table-column  show-tooltip-when-overflow label="操作前的旧值" min-width="150px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.contentOld }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作后的新值" min-width="150px" align="center">
+      <el-table-column  show-tooltip-when-overflow label="操作后的新值" min-width="150px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.contentNew }}</span>
         </template>

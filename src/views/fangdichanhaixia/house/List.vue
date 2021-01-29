@@ -105,72 +105,72 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column label="HouseID" prop="id" align="center" width="80">
+      <el-table-column show-tooltip-when-overflow label="HouseID" prop="id" align="center" width="80">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="房源地址" prop="id" align="center" width="200">
+      <el-table-column show-tooltip-when-overflow label="房源地址" prop="id" align="center" width="200">
         <template slot-scope="{row}">
           <span>{{ row.address }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="BossID" prop="id" align="center" width="80">
+      <el-table-column show-tooltip-when-overflow label="BossID" prop="id" align="center" width="80">
         <template slot-scope="{row}">
           <span>{{ row.bossId }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="房东名称" prop="id" align="center" width="80">
+      <el-table-column show-tooltip-when-overflow label="房东名称" prop="id" align="center" width="80">
         <template slot-scope="{row}">
           <span>{{ row.ownerName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="房东电话号" prop="id" align="center" width="120">
+      <el-table-column show-tooltip-when-overflow label="房东电话号" prop="id" align="center" width="120">
         <template slot-scope="{row}">
           <span>{{ row.ownerPhoneNumber }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="收款人名称" prop="id" align="center" width="100">
+      <el-table-column show-tooltip-when-overflow label="收款人名称" prop="id" align="center" width="100">
         <template slot-scope="{row}">
           <span>{{ row.payeeName }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="收款人手机号" prop="id" align="center" width="120">
+      <el-table-column show-tooltip-when-overflow label="收款人手机号" prop="id" align="center" width="120">
         <template slot-scope="{row}">
           <span>{{ row.payeePhoneNumber }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="合同开始日期" prop="id" align="center" width="120">
+      <el-table-column show-tooltip-when-overflow label="合同开始日期" prop="id" align="center" width="120">
         <template slot-scope="{row}">
           <span>{{ row.contractStartTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="合同结束日期" prop="id" align="center" width="120">
+      <el-table-column show-tooltip-when-overflow label="合同结束日期" prop="id" align="center" width="120">
         <template slot-scope="{row}">
           <span>{{ row.contractEndTime }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="合同编号" prop="id" align="center" width="120">
+      <el-table-column show-tooltip-when-overflow label="合同编号" prop="id" align="center" width="120">
         <template slot-scope="{row}">
           <span>{{ row.contractCode }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="租住类型" prop="id" align="center" width="80">
+      <el-table-column show-tooltip-when-overflow label="租住类型" prop="id" align="center" width="80">
         <template slot-scope="{row}">
           <span>{{ row.rentedTypeStr }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="付款类型" prop="id" align="center" width="80">
+      <el-table-column show-tooltip-when-overflow label="付款类型" prop="id" align="center" width="80">
         <template slot-scope="{row}">
           <span>{{ row.payorTypeStr }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="收款账号" prop="id" align="center" width="120">
+      <el-table-column show-tooltip-when-overflow label="收款账号" prop="id" align="center" width="120">
         <template slot-scope="{row}">
           <span>{{ row.payeeAccount }}</span>
         </template>
       </el-table-column>
-      <el-table-column label="操作" align="center" width="230" class-name="small-padding fixed-width">
+      <el-table-column show-tooltip-when-overflow label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
             Edit
@@ -239,8 +239,8 @@
 
     <el-dialog :visible.sync="dialogPvVisible" title="Reading statistics">
       <el-table :data="pvData" border fit highlight-current-row style="width: 100%">
-        <el-table-column prop="key" label="Channel"/>
-        <el-table-column prop="pv" label="Pv"/>
+        <el-table-column show-tooltip-when-overflow prop="key" label="Channel"/>
+        <el-table-column show-tooltip-when-overflow prop="pv" label="Pv"/>
       </el-table>
       <span slot="footer" class="dialog-footer">
         <el-button type="primary" @click="dialogPvVisible = false">Confirm</el-button>
