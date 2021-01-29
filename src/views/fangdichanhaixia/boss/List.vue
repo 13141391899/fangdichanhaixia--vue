@@ -1,21 +1,35 @@
 <template>
   <div class="app-container">
     <div class="filter-container">
-      <el-sl-panel style="border-left: 60px;width: 100px;text-align: right" class="filter-item">bossID:</el-sl-panel>
-      <el-input v-model="listQuery.id" placeholder="bossID" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px;width: 100px;text-align: right" class="filter-item">姓名:</el-sl-panel>
-      <el-input v-model="listQuery.name" placeholder="姓名" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-sl-panel style="border-left: 60px;margin-left: 70px;width: 100px;text-align: right" class="filter-item">手机号码:</el-sl-panel>
-      <el-input v-model="listQuery.phoneNumber" placeholder="手机号码" style="width: 200px;" class="filter-item" @keyup.enter.native="handleFilter"/>
-      <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-        Search
-      </el-button>
-      <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-        Add
-      </el-button>
-      <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-        Export
-      </el-button>
+      <el-form ref="form" :model="form" label-width="100px">
+        <el-row :gutter="24">
+          <el-col :span="6">
+            <el-form-item label="bossID:" :span="2">
+              <el-input v-model="listQuery.id" :span="4"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="姓名:" :span="2">
+              <el-input v-model="listQuery.name" :span="4"/>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
+            <el-form-item label="手机号码:" :span="2">
+              <el-input v-model="listQuery.phoneNumber" :span="4"/>
+            </el-form-item>
+          </el-col>
+          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+            Search
+          </el-button>
+          <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+            Add
+          </el-button>
+          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+            Export
+          </el-button>
+        </el-row>
+      </el-form>
+
     </div>
 
     <el-table
