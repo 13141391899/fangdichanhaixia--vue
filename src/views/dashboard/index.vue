@@ -22,8 +22,10 @@ export default {
       'roles'
     ])
   },
+
   created() {
-    if (!this.roles.includes('admin')) {
+    //在这里判断首页进那个页面 wnaghaixia  lijin
+    if (!this.roles.includes('wnaghaixiaxxxxxx')) {
       this.currentRole = 'editorDashboard'
     }
   }

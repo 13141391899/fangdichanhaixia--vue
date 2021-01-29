@@ -1,25 +1,25 @@
 
 const tokens = {
   wanghaixia: {
-    token: 'wanghaixia-token'
+    token: 'wanghaixia'
   },
   lijin: {
-    token: 'lijin-token'
+    token: 'lijin'
   }
 }
 
 const users = {
-  'wanghaixia-token': {
+  'wanghaixia': {
     roles: ['wanghaixia'],
     introduction: 'I am a super wanghaixiaistrator',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Super wanghaixia'
+    name: 'Super Wanghaixia'
   },
-  'lijin-token': {
+  'lijin': {
     roles: ['lijin'],
-    introduction: 'I am an lijin',
+    introduction: 'I am a super lijin',
     avatar: 'https://wpimg.wallstcn.com/f778738c-e4f8-4870-b634-56703b4acafe.gif',
-    name: 'Normal lijin'
+    name: 'Super Lijin'
   }
 }
 
@@ -36,7 +36,7 @@ module.exports = [
       if (!token) {
         return {
           code: 60204,
-          message: 'Account and password are incorrect.'
+          message: '账号或密码错误,请联系管理员.'
         }
       }
 
