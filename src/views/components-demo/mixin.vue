@@ -40,7 +40,7 @@
       </el-card>
     </el-row>
 
-    <el-row :gutter="20" style="margin-top:50px;">
+    <el-row :gutter="24" style="margin-top:50px;">
       <el-col :span="6">
         <el-card class="box-card">
           <div slot="header" class="clearfix">
@@ -96,7 +96,7 @@
       </el-col>
     </el-row>
 
-    <el-row :gutter="20" style="margin-top:50px;">
+    <el-row :gutter="24" style="margin-top:50px;">
       <el-col :span="8">
         <el-card class="box-card">
           <div slot="header" class="clearfix">

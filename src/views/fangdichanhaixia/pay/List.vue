@@ -5,12 +5,12 @@
         <el-row :gutter="24">
           <el-col :span="6">
             <el-form-item label="houseID:" :span="2">
-              <el-input v-model="listQuery.houseId" :span="4"></el-input>
+              <el-input clearable v-model="listQuery.houseId" :span="4"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="RoomID:">
-              <el-input v-model="listQuery.roomId"></el-input>
+              <el-input clearable v-model="listQuery.roomId"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -22,37 +22,38 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="支付金额:">
-              <el-input v-model="listQuery.payAmount"></el-input>
+              <el-input clearable v-model="listQuery.payAmount"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :gutter="20">
+        <el-row :gutter="24">
           <el-col :span="6">
             <el-form-item label="支付状态:">
-              <el-select v-model="listQuery.payStatus" placeholder="支付状态" clearable class="filter-item">
+              <el-select v-model="listQuery.payStatus" placeholder="支付状态" style="width: 100%" clearable class="filter-item">
                 <el-option v-for="item in payStatusOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="预计付款时间:">
-              <el-date-picker v-model="listQuery.expectPayTime" style="width: 100%;" type="datetime" placeholder="请选择预计付款时间"/>
+              <el-date-picker v-model="listQuery.expectPayTime" style="width: 100%;" type="date" placeholder="请选择预计付款时间"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="实际付款时间:">
-              <el-date-picker v-model="listQuery.realPayTime" style="width: 100%;" type="datetime" placeholder="请选择实际付款时间"/>
+              <el-date-picker v-model="listQuery.realPayTime" style="width: 100%;" type="date" placeholder="请选择实际付款时间"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="备注:">
-              <el-input v-model="listQuery.remarks"></el-input>
+              <el-input clearable v-model="listQuery.remarks"></el-input>
             </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :gutter="20">
+        <el-row :gutter="24">
+          <el-col :span="20" align="right">
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
             Search
           </el-button>
@@ -62,6 +63,7 @@
           <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
             Export
           </el-button>
+          </el-col>
         </el-row>
       </el-form>
     </div>
@@ -137,32 +139,32 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
         <el-form-item label="房源ID" prop="房源ID">
-          <el-input v-model="temp.houseId" placeholder="请填写房源ID"/>
+          <el-input clearable v-model="temp.houseId" placeholder="请填写房源ID"/>
         </el-form-item>
         <el-form-item label="房间ID" prop="房间ID">
-          <el-input v-model="temp.roomId" placeholder="请填写房间ID"/>
+          <el-input clearable v-model="temp.roomId" placeholder="请填写房间ID"/>
         </el-form-item>
         <el-form-item label="支付类型" prop="支付类型">
-          <el-select v-model="temp.payType" placeholder="请选择支付类型" clearable class="filter-item" style="width: 200px">
+          <el-select v-model="temp.payType" placeholder="请选择支付类型" clearable class="filter-item" style="width: 100%">
             <el-option v-for="item in payTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
           </el-select>
         </el-form-item>
         <el-form-item label="预计付款时间" prop="预计付款时间">
-          <el-date-picker v-model="temp.expectPayTime" type="datetime" placeholder="请选择预计付款时间"/>
+          <el-date-picker v-model="temp.expectPayTime" style="width: 100%" type="date" placeholder="请选择预计付款时间"/>
         </el-form-item>
         <el-form-item label="实际付款时间" prop="实际付款时间">
-          <el-date-picker v-model="temp.realPayTime" type="datetime" placeholder="请选择实际付款时间"/>
+          <el-date-picker v-model="temp.realPayTime" style="width: 100%" type="date" placeholder="请选择实际付款时间"/>
         </el-form-item>
         <el-form-item label="支付金额" prop="支付金额">
-          <el-input v-model="temp.payAmount" placeholder="请填写支付金额"/>
+          <el-input clearable v-model="temp.payAmount" placeholder="请填写支付金额"/>
         </el-form-item>
         <el-form-item label="支付状态" prop="支付状态">
-          <el-select v-model="temp.payStatus" placeholder="请选择支付状态" clearable class="filter-item" style="width: 200px">
+          <el-select v-model="temp.payStatus" placeholder="请选择支付状态" clearable class="filter-item" style="width: 100%">
             <el-option v-for="item in payStatusOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
           </el-select>
         </el-form-item>
         <el-form-item label="备注" prop="备注">
-          <el-input v-model="temp.remarks" placeholder="请填写备注"/>
+          <el-input clearable v-model="temp.remarks" placeholder="请填写备注"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

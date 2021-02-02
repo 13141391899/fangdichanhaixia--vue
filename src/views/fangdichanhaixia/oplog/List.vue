@@ -2,37 +2,39 @@
   <div class="app-container">
     <div class="filter-container">
       <el-form ref="form" :model="form" label-width="100px">
-        <el-row :gutter="20">
+        <el-row :gutter="24">
           <el-col :span="6">
             <el-form-item label="OpLogId:">
-              <el-input v-model="listQuery.id"/>
+              <el-input clearable v-model="listQuery.id"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="操作类型:">
-              <el-select v-model="listQuery.type" placeholder="操作类型" clearable class="filter-item" style="width: 200px">
+              <el-select v-model="listQuery.type" placeholder="操作类型" clearable class="filter-item" style="width: 100%">
                 <el-option v-for="item in opTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
               </el-select>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="操作人:">
-              <el-input v-model="listQuery.creatorName"/>
+              <el-input clearable v-model="listQuery.creatorName"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
-            <el-form-item label="操作时间:">
-              <el-date-picker v-model="listQuery.createTime" type="datetime" placeholder="请选择合同开始日期"/>
+            <el-form-item label="操作时间:" >
+              <el-date-picker v-model="listQuery.createTime" style="width: 100%" type="date" placeholder="请选择合同开始日期"/>
             </el-form-item>
           </el-col>
         </el-row>
-        <el-row :gutter="20">
-          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-            Search
-          </el-button>
-          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-            Export
-          </el-button>
+        <el-row :gutter="24">
+          <el-col :span="22" align="right">
+            <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+              Search
+            </el-button>
+            <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+              Export
+            </el-button>
+          </el-col>
         </el-row>
       </el-form>
 
@@ -47,7 +49,7 @@
       highlight-current-row
       style="width: 100%;"
     >
-      <el-table-column show-tooltip-when-overflow label="OpLogID" width="100px" align="center" >
+      <el-table-column show-tooltip-when-overflow label="OpLogID" width="100px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.id }}</span>
         </template>
@@ -67,12 +69,12 @@
           <span>{{ row.createTime | parseTime('{y}-{m}-{d} {h}:{i}') }}</span>
         </template>
       </el-table-column>
-      <el-table-column  show-tooltip-when-overflow label="操作前的旧值" min-width="150px" align="center">
+      <el-table-column show-tooltip-when-overflow label="操作前的旧值" min-width="150px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.contentOld }}</span>
         </template>
       </el-table-column>
-      <el-table-column  show-tooltip-when-overflow label="操作后的新值" min-width="150px" align="center">
+      <el-table-column show-tooltip-when-overflow label="操作后的新值" min-width="150px" align="center">
         <template slot-scope="{row}">
           <span>{{ row.contentNew }}</span>
         </template>

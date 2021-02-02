@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <div v-if="user">
-      <el-row :gutter="20">
+      <el-row :gutter="24">
 
         <el-col :span="6" :xs="24">
           <user-card :user="user" />

@@ -5,28 +5,32 @@
         <el-row :gutter="24">
           <el-col :span="6">
             <el-form-item label="bossID:" :span="2">
-              <el-input v-model="listQuery.id" :span="4"/>
+              <el-input clearable v-model="listQuery.id" :span="4"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="姓名:" :span="2">
-              <el-input v-model="listQuery.name" :span="4"/>
+              <el-input clearable v-model="listQuery.name" :span="4"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="手机号码:" :span="2">
-              <el-input v-model="listQuery.phoneNumber" :span="4"/>
+              <el-input clearable v-model="listQuery.phoneNumber" :span="4"/>
             </el-form-item>
           </el-col>
-          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-            Search
-          </el-button>
-          <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-            Add
-          </el-button>
-          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-            Export
-          </el-button>
+        </el-row>
+        <el-row :gutter="24">
+          <el-col :span="20" align="right">
+            <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+              Search
+            </el-button>
+            <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+              Add
+            </el-button>
+            <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+              Export
+            </el-button>
+          </el-col>
         </el-row>
       </el-form>
 
@@ -78,13 +82,13 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
         <el-form-item label="姓名" prop="姓名">
-          <el-input v-model="temp.name" placeholder="请填写姓名"/>
+          <el-input clearable v-model="temp.name" placeholder="请填写姓名"/>
         </el-form-item>
         <el-form-item label="手机号码" prop="手机号码">
-          <el-input v-model="temp.phoneNumber" placeholder="请填写手机号码"/>
+          <el-input clearable v-model="temp.phoneNumber" placeholder="请填写手机号码"/>
         </el-form-item>
         <el-form-item label="上任时间" prop="上任时间">
-          <el-date-picker v-model="temp.createTime" type="datetime" placeholder="请选择上任时间"/>
+          <el-date-picker v-model="temp.createTime" type="date" placeholder="请选择上任时间"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">

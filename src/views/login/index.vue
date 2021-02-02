@@ -10,7 +10,7 @@
         <span class="svg-container">
           <svg-icon icon-class="user" />
         </span>
-        <el-input
+        <el-input clearable
           ref="username"
           v-model="loginForm.username"
           placeholder="Username"
@@ -26,7 +26,7 @@
           <span class="svg-container">
             <svg-icon icon-class="password" />
           </span>
-          <el-input
+          <el-input clearable
             :key="passwordType"
             ref="password"
             v-model="loginForm.password"

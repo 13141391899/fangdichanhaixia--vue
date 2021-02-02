@@ -5,37 +5,37 @@
         <el-row :gutter="24">
           <el-col :span="6">
             <el-form-item label="RoomID:">
-              <el-input v-model="listQuery.id"></el-input>
+              <el-input clearable v-model="listQuery.id"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="houseID:" :span="2">
-              <el-input v-model="listQuery.houseId" :span="4"></el-input>
+              <el-input clearable v-model="listQuery.houseId" :span="4"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="房间名称:">
-              <el-input v-model="listQuery.name"></el-input>
+              <el-input clearable v-model="listQuery.name"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="房间租住状态:">
-              <el-select v-model="listQuery.rentedStatus" placeholder="房间租住状态" clearable class="filter-item">
+              <el-select v-model="listQuery.rentedStatus" placeholder="房间租住状态" style="width: 100%" clearable class="filter-item">
                 <el-option v-for="item in rentedStatusOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
               </el-select>
             </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :gutter="20">
+        <el-row :gutter="24">
           <el-col :span="6">
             <el-form-item label="租房人名称:">
-              <el-input v-model="listQuery.rentPeopleName"></el-input>
+              <el-input clearable v-model="listQuery.rentPeopleName"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="租房人电话:">
-              <el-input v-model="listQuery.rentPeoplePhoneNumber"></el-input>
+              <el-input clearable v-model="listQuery.rentPeoplePhoneNumber"></el-input>
             </el-form-item>
           </el-col>
           <el-col :span="6">
@@ -47,20 +47,20 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="合同开始时间:">
-              <el-date-picker v-model="listQuery.contractStartTime" style="width: 100%;" type="datetime" placeholder="请选择合同结束日期"/>
+              <el-date-picker v-model="listQuery.contractStartTime" style="width: 100%;" type="date" placeholder="请选择合同结束日期"/>
             </el-form-item>
           </el-col>
         </el-row>
 
-        <el-row :gutter="20">
+        <el-row :gutter="24">
           <el-col :span="6">
             <el-form-item label="合同结束时间:">
-              <el-date-picker v-model="listQuery.contractEndTime" style="width: 100%;" type="datetime" placeholder="请选择合同结束日期"/>
+              <el-date-picker v-model="listQuery.contractEndTime" style="width: 100%;" type="date" placeholder="请选择合同结束日期"/>
             </el-form-item>
           </el-col>
           <el-col :span="6">
             <el-form-item label="合同编号:">
-              <el-input v-model="listQuery.contractCode"></el-input>
+              <el-input clearable v-model="listQuery.contractCode"></el-input>
             </el-form-item>
           </el-col>
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
@@ -152,35 +152,35 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form ref="dataForm" :rules="rules" :model="temp" label-position="left" label-width="100px" style="width: 400px; margin-left:50px;">
         <el-form-item label="对应的房间ID" prop="对应的房间ID">
-          <el-input v-model="temp.houseId" placeholder="请填写对应的房间ID"/>
+          <el-input clearable v-model="temp.houseId" placeholder="请填写对应的房间ID"/>
         </el-form-item>
         <el-form-item label="房间名称" prop="房间名称">
-          <el-input v-model="temp.name" placeholder="请填写房间名称"/>
+          <el-input clearable v-model="temp.name" placeholder="请填写房间名称"/>
         </el-form-item>
         <el-form-item label="房间租住状态" prop="房间租住状态">
-          <el-select v-model="temp.rentedStatus" placeholder="请选择房间租住状态" clearable class="filter-item" style="width: 200px">
+          <el-select v-model="temp.rentedStatus" placeholder="请选择房间租住状态" clearable class="filter-item" style="width: 100%">
             <el-option v-for="item in rentedStatusOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
           </el-select>
         </el-form-item>
         <el-form-item label="租房人名称" prop="租房人名称">
-          <el-input v-model="temp.rentPeopleName" placeholder="请填写租房人名称"/>
+          <el-input clearable v-model="temp.rentPeopleName" placeholder="请填写租房人名称"/>
         </el-form-item>
         <el-form-item label="租房人电话" prop="租房人电话">
-          <el-input v-model="temp.rentPeoplePhoneNumber" placeholder="请填写租房人电话"/>
+          <el-input clearable v-model="temp.rentPeoplePhoneNumber" placeholder="请填写租房人电话"/>
         </el-form-item>
         <el-form-item label="付款类型" prop="付款类型">
-          <el-select v-model="temp.payorType" placeholder="请选择付款类型" clearable class="filter-item" style="width: 200px">
+          <el-select v-model="temp.payorType" placeholder="请选择付款类型" clearable class="filter-item" style="width: 100%">
             <el-option v-for="item in payRentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
           </el-select>
         </el-form-item>
         <el-form-item label="合同开始时间" prop="合同开始时间">
-          <el-date-picker v-model="temp.contractStartTime" type="datetime" placeholder="请选择合同开始日期"/>
+          <el-date-picker v-model="temp.contractStartTime" style="width: 100%" type="date" placeholder="请选择合同开始日期"/>
         </el-form-item>
         <el-form-item label="合同结束时间" prop="合同结束时间">
-          <el-date-picker v-model="temp.contractEndTime" type="datetime" placeholder="请选择合同结束日期"/>
+          <el-date-picker v-model="temp.contractEndTime" style="width: 100%" type="date" placeholder="请选择合同结束日期"/>
         </el-form-item>
         <el-form-item label="合同编号" prop="合同编号">
-          <el-input v-model="temp.contractCode" placeholder="请填写合同编号"/>
+          <el-input clearable v-model="temp.contractCode" placeholder="请填写合同编号"/>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
