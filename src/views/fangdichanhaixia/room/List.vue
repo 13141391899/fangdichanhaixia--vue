@@ -39,25 +39,22 @@
             </el-form-item>
           </el-col>
           <el-col :span="6">
+            <el-form-item label="合同起止日期:">
+              <el-date-picker v-model="temp.contracTimeArr" style="width: 100%" type="daterange" range-separator="至"  start-placeholder="开始日期" end-placeholder="结束日期"
+                              value-format="yyyy-MM-dd"></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="6">
             <el-form-item label="付款类型:">
               <el-select v-model="listQuery.payorType" placeholder="租住类型" clearable class="filter-item">
                 <el-option v-for="item in payRentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
               </el-select>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item label="合同开始时间:">
-              <el-date-picker v-model="listQuery.contractStartTime" style="width: 100%;" type="date" placeholder="请选择合同结束日期"/>
-            </el-form-item>
-          </el-col>
+
         </el-row>
 
         <el-row :gutter="24">
-          <el-col :span="6">
-            <el-form-item label="合同结束时间:">
-              <el-date-picker v-model="listQuery.contractEndTime" style="width: 100%;" type="date" placeholder="请选择合同结束日期"/>
-            </el-form-item>
-          </el-col>
           <el-col :span="6">
             <el-form-item label="合同编号:">
               <el-input clearable v-model="listQuery.contractCode"></el-input>
@@ -173,11 +170,9 @@
             <el-option v-for="item in payRentTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
           </el-select>
         </el-form-item>
-        <el-form-item label="合同开始时间" prop="合同开始时间">
-          <el-date-picker v-model="temp.contractStartTime" style="width: 100%" type="date" placeholder="请选择合同开始日期"/>
-        </el-form-item>
-        <el-form-item label="合同结束时间" prop="合同结束时间">
-          <el-date-picker v-model="temp.contractEndTime" style="width: 100%" type="date" placeholder="请选择合同结束日期"/>
+        <el-form-item label="合同起止日期:">
+          <el-date-picker v-model="temp.contracTimeArr" style="width: 100%" type="daterange" range-separator="至"  start-placeholder="开始日期" end-placeholder="结束日期"
+                          value-format="yyyy-MM-dd"></el-date-picker>
         </el-form-item>
         <el-form-item label="合同编号" prop="合同编号">
           <el-input clearable v-model="temp.contractCode" placeholder="请填写合同编号"/>
@@ -257,8 +252,7 @@ export default {
         rentPeopleName: null,
         rentPeoplePhoneNumber: null,
         payorType: null,
-        contractStartTime: null,
-        contractEndTime: null,
+        contracTimeArr: null,
         contractCode: null,
         pageNum: 1,
         pageSize: 20
@@ -276,8 +270,7 @@ export default {
         rentPeopleName: null,
         rentPeoplePhoneNumber: null,
         payorType: null,
-        contractStartTime: null,
-        contractEndTime: null,
+        contracTimeArr: null,
         contractCode: null
       },
       dialogFormVisible: false,

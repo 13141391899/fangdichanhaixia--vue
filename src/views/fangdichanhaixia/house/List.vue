@@ -63,17 +63,18 @@
               </el-select>
             </el-form-item>
           </el-col>
-
+          <el-col :span="6">
+            <el-form-item label="合同起止日期:">
+              <el-date-picker v-model="listQuery.contracTimeArr" type="daterange" style="width: 100%;" range-separator="至"  start-placeholder="开始日期" end-placeholder="结束日期"
+              value-format="yyyy-MM-dd"></el-date-picker>
+            </el-form-item>
+          </el-col>
           <el-col :span="6">
             <el-form-item label="收款账号:">
               <el-input clearable v-model="listQuery.payeeAccount"/>
             </el-form-item>
           </el-col>
-          <el-col>
-            <el-form-item label="合同起止日期:">
-              <el-date-picker v-model="listQuery.contracTimeArr" type="daterange" range-separator="至"  start-placeholder="开始日期" end-placeholder="结束日期" value-format="yyyy-MM-DD"></el-date-picker>
-            </el-form-item>
-          </el-col>
+
         </el-row>
 
         <el-row :gutter="24">
@@ -199,11 +200,9 @@
         <el-form-item label="收款人手机号" prop="收款人手机号">
           <el-input clearable v-model="temp.payeePhoneNumber" placeholder="请填写收款人手机号"/>
         </el-form-item>
-        <el-form-item label="合同开始日期" prop="合同开始日期">
-          <el-date-picker v-model="temp.contractStartTime" type="date" placeholder="请选择合同开始日期"/>
-        </el-form-item>
-        <el-form-item label="合同结束日期" prop="合同结束日期">
-          <el-date-picker v-model="temp.contractEndTime" type="date" placeholder="请选择合同结束日期"/>
+        <el-form-item label="合同起止日期:">
+          <el-date-picker v-model="temp.contracTimeArr" style="width: 100%" type="daterange" range-separator="至"  start-placeholder="开始日期" end-placeholder="结束日期"
+                          value-format="yyyy-MM-dd"></el-date-picker>
         </el-form-item>
         <el-form-item label="合同编号" prop="合同编号">
           <el-input clearable v-model="temp.contractCode" placeholder="请填写合同编号"/>

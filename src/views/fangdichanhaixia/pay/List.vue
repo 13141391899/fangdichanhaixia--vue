@@ -15,7 +15,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="支付类型:">
-              <el-select v-model="listQuery.rentedStatus" placeholder="支付类型" clearable class="filter-item">
+              <el-select v-model="listQuery.rentedStatus" style="width: 100%" placeholder="支付类型" clearable class="filter-item">
                 <el-option v-for="item in payTypeOptions" :key="item.key" :label="item.display_name" :value="item.key"/>
               </el-select>
             </el-form-item>

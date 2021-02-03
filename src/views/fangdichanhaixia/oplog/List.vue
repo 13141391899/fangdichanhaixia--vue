@@ -20,14 +20,16 @@
               <el-input clearable v-model="listQuery.creatorName"/>
             </el-form-item>
           </el-col>
-          <el-col :span="6">
-            <el-form-item label="操作时间:" >
-              <el-date-picker v-model="listQuery.createTime" style="width: 100%" type="date" placeholder="请选择合同开始日期"/>
-            </el-form-item>
-          </el-col>
+
         </el-row>
         <el-row :gutter="24">
-          <el-col :span="22" align="right">
+          <el-col :span="6">
+            <el-form-item label="操作时间:" >
+              <el-date-picker v-model="listQuery.createTimeArr" style="width: 130%" type="datetimerange" range-separator="至"  start-placeholder="开始日期" end-placeholder="结束日期"
+                              value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
+            </el-form-item>
+          </el-col>
+          <el-col :span="16" align="center">
             <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
               Search
             </el-button>
@@ -137,6 +139,7 @@ export default {
         creatorName: null,
         contentOld: null,
         contentNew: null,
+        createTimeArr: null,
         pageNum: 1,
         pageSize: 20
       },
