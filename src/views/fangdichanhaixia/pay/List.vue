@@ -54,15 +54,15 @@
 
         <el-row :gutter="24">
           <el-col :span="20" align="right">
-          <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-            查询
-          </el-button>
-          <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-            新增
-          </el-button>
-          <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-            导出
-          </el-button>
+            <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
+              查询
+            </el-button>
+            <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
+              新增
+            </el-button>
+            <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
+              导出
+            </el-button>
           </el-col>
         </el-row>
       </el-form>
@@ -405,8 +405,8 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['HouseId', '支付地址', 'bossID', '房东名称', '房东电话号']
-        const filterVal = ['id', 'address', 'bossId', 'bossId', 'bossId']
+        const tHeader = ['PayID', 'RoomID', 'HouseID', '支付类型', '预计支付时间', '实际支付时间', '房东名称', '支付金额', '支付状态', '备注']
+        const filterVal = ['id', 'roomId', 'houseId', 'payTypeStr', 'expectPayTime', 'realPayTime', 'payAmount', 'remarks ']
         const data = this.formatJson(filterVal)
         excel.export_json_to_excel({
           header: tHeader,

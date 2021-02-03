@@ -40,7 +40,7 @@
           </el-col>
           <el-col :span="6">
             <el-form-item label="合同起止日期:">
-              <el-date-picker v-model="temp.contracTimeArr" style="width: 100%" type="daterange" range-separator="至"  start-placeholder="开始日期" end-placeholder="结束日期"
+              <el-date-picker v-model="temp.contracTimeArr" style="width: 100%" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
                               value-format="yyyy-MM-dd"></el-date-picker>
             </el-form-item>
           </el-col>
@@ -171,7 +171,7 @@
           </el-select>
         </el-form-item>
         <el-form-item label="合同起止日期:">
-          <el-date-picker v-model="temp.contracTimeArr" style="width: 100%" type="daterange" range-separator="至"  start-placeholder="开始日期" end-placeholder="结束日期"
+          <el-date-picker v-model="temp.contracTimeArr" style="width: 100%" type="daterange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
                           value-format="yyyy-MM-dd"></el-date-picker>
         </el-form-item>
         <el-form-item label="合同编号" prop="合同编号">
@@ -413,8 +413,8 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['HouseId', '房间地址', 'bossID', '房东名称', '房东电话号']
-        const filterVal = ['id', 'address', 'bossId', 'bossId', 'bossId']
+        const tHeader = ['RoomID', 'HouseID', '房间名称', '租住状态', '租房人名称', '租房人电话', '付款类型', '合同编号', '合同编号', '房东名称', '房东电话号', '合同开始日期', '合同结束日期']
+        const filterVal = ['id', 'houseId', 'name', 'rentedStatusStr', 'rentPeopleName', 'rentPeoplePhoneNumber', 'payorTypeStr', 'contractCode', 'contractStartTime', 'contractEndTime ']
         const data = this.formatJson(filterVal)
         excel.export_json_to_excel({
           header: tHeader,

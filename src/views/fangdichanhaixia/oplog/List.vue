@@ -24,8 +24,8 @@
         </el-row>
         <el-row :gutter="24">
           <el-col :span="6">
-            <el-form-item label="操作时间:" >
-              <el-date-picker v-model="listQuery.createTimeArr" style="width: 130%" type="datetimerange" range-separator="至"  start-placeholder="开始日期" end-placeholder="结束日期"
+            <el-form-item label="操作时间:">
+              <el-date-picker v-model="listQuery.createTimeArr" style="width: 130%" type="datetimerange" range-separator="至" start-placeholder="开始日期" end-placeholder="结束日期"
                               value-format="yyyy-MM-dd HH:mm:ss"></el-date-picker>
             </el-form-item>
           </el-col>
@@ -295,8 +295,8 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['timestamp', 'title', 'type', 'importance', 'status']
-        const filterVal = ['timestamp', 'title', 'type', 'importance', 'status']
+        const tHeader = ['OpLogID', '操作类型', '操作人', '操作时间', '操作前的旧值', '操作后的新值']
+        const filterVal = ['id', 'typeStr', 'creatorName', 'createTime', 'contentOld', 'contentNew  ']
         const data = this.formatJson(filterVal)
         excel.export_json_to_excel({
           header: tHeader,

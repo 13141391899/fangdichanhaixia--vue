@@ -467,8 +467,9 @@ export default {
     handleDownload() {
       this.downloadLoading = true
       import('@/vendor/Export2Excel').then(excel => {
-        const tHeader = ['HouseId', '房源地址', 'bossID', '房东名称', '房东电话号']
-        const filterVal = ['id', 'address', 'bossId', 'bossId', 'bossId']
+        const tHeader = ['HouseId', '房源地址', 'bossID', '房东名称', '房东电话号', '收款人名称', '收款人手机号', '合同开始日期', '合同结束日期', '合同编号', '租住类型', '付款类型', '收款账号']
+        const filterVal = ['id', 'address', 'bossId', 'ownerName', 'ownerPhoneNumber', 'payeeName ', 'payeePhoneNumber','contractStartTime  ', 'contractEndTime ', 'contractCode ', 'rentedTypeStr ',
+          'payorTypeStr ', 'payeeAccount  ']
         const data = this.formatJson(filterVal)
         excel.export_json_to_excel({
           header: tHeader,
