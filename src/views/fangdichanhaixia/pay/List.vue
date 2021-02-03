@@ -55,13 +55,13 @@
         <el-row :gutter="24">
           <el-col :span="20" align="right">
           <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-            Search
+            查询
           </el-button>
           <el-button class="filter-item" style="margin-left: 10px;" type="primary" icon="el-icon-edit" @click="handleCreate">
-            Add
+            新增
           </el-button>
           <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-            Export
+            导出
           </el-button>
           </el-col>
         </el-row>
@@ -125,10 +125,10 @@
       <el-table-column show-tooltip-when-overflow label="操作" align="center" width="230" class-name="small-padding fixed-width">
         <template slot-scope="{row,$index}">
           <el-button type="primary" size="mini" @click="handleUpdate(row)">
-            Edit
+            修改
           </el-button>
           <el-button size="mini" type="danger" @click="handleDelete(row,$index)">
-            Delete
+            删除
           </el-button>
         </template>
       </el-table-column>

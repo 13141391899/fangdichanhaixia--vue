@@ -31,10 +31,10 @@
           </el-col>
           <el-col :span="16" align="center">
             <el-button v-waves class="filter-item" type="primary" icon="el-icon-search" @click="handleFilter">
-              Search
+              查询
             </el-button>
             <el-button v-waves :loading="downloadLoading" class="filter-item" type="primary" icon="el-icon-download" @click="handleDownload">
-              Export
+              导出
             </el-button>
           </el-col>
         </el-row>
